@@ -1,5 +1,5 @@
 {
-  "name": "my-starterkit",
+  "name": "nexus-react-starterkit",
   "version": "0.1.0",
   "description": "",
   "main": "dist/index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/elierotenberg/my-starterkit.git"
+    "url": "https://github.com/elierotenberg/nexus-react-starterkit.git"
   },
   "author": "Elie Rotenberg <elie@rotenberg.io>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/elierotenberg/my-starterkit/issues"
+    "url": "https://github.com/elierotenberg/nexus-react-starterkit/issues"
   },
-  "homepage": "https://github.com/elierotenberg/my-starterkit",
+  "homepage": "https://github.com/elierotenberg/nexus-react-starterkit",
   "devDependencies": {
     "del": "^0.1.3",
     "gulp": "^3.8.10",
