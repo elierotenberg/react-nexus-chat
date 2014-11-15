@@ -17,21 +17,35 @@
   },
   "homepage": "https://github.com/elierotenberg/nexus-react-starterkit",
   "devDependencies": {
+    "autoprefixer-core": "^4.0.0",
+    "browserify": "^6.3.2",
+    "csswring": "^1.3.1",
     "del": "^0.1.3",
+    "envify": "^3.2.0",
     "gulp": "^3.8.10",
+    "gulp-6to5": "^1.0.1",
+    "gulp-imagemin": "^2.0.0",
     "gulp-insert": "^0.4.0",
     "gulp-jshint": "^1.9.0",
     "gulp-plumber": "^0.6.6",
+    "gulp-postcss": "^3.0.0",
+    "gulp-react": "^2.0.0",
+    "gulp-rename": "^1.2.0",
     "gulp-sourcemaps": "^1.2.8",
+    "gulp-uglify": "^1.0.1",
     "gulp-util": "^3.0.1",
-    "gulp-6to5": "^1.0.1",
     "jshint-stylish": "^1.0.0"
   },
   "dependencies": {
     "6to5": "^1.11.3",
     "bluebird": "^2.3.11",
     "co": "^3.1.0",
+    "gulp-react-nexus-style": "^0.1.1",
     "lodash-next": "^1.0.1",
+    "nexus-router": "^0.1.2",
+    "nexus-uplink-client": "^0.2.0",
+    "nexus-uplink-simple-server": "^0.1.0",
+    "react-nexus": "git://github.com/elierotenberg/react-rails#nexus-refactor",
     "should": "^4.2.1"
   }
 }
