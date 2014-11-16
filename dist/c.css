@@ -1,0 +1,22 @@
+/* From Root.styles: */
+html, body: {
+  color: #484848;
+  font-family: "Roboto", sans-serif;
+}
+
+a, a:hover, a:visited, a:active: {
+  text-decoration: none;
+}
+
+a: {
+  color: #aaa;
+}
+
+a:hover: {
+  color: #fafafa;
+}
+
+a:active: {
+  color: #fff;
+}
+  

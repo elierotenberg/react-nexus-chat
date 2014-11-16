@@ -1,6 +1,5 @@
-
-// Escape double-quotes
 /* jshint ignore:start */
+// Escape double-quotes
 const X = (x) => x.replace(/\"/g, '\\"');
 let DEV = (process.env.NODE_ENV === 'development');
 
@@ -14,6 +13,9 @@ module.exports = ({ title, description, canonical, lang, rootHtml, serializedFlu
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>${title || ""}</title>
       <link rel="stylesheet" type="text/css" href="/p${DEV ? '': '.min'}.css">
+      <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+      <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+      <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     </head>
     <body>
       <div id="__ReactNexusRoot">
@@ -24,6 +26,7 @@ module.exports = ({ title, description, canonical, lang, rootHtml, serializedFlu
           w.__ReactNexus = { serializedFlux: f, serializedHeaders: h, guid: g, rootElement: d.getElementById(i) };
         }(window, document, '__ReactNexusRoot', '${serializedFlux}', '${serializedHeaders}', '${guid}'))
       </script>
+      <script type="text/javascript" src="/p${DEV ? '': '.min'}.js">
     </body>
   </html>
   `;
