@@ -2,9 +2,14 @@ const R = require('react-nexus');
 const React = R.React;
 const styles = require('../styles');
 
-
 const Root = React.createClass({
   mixins: [R.Root.Mixin],
+
+  render() {
+    return <div className='Root'>
+      Hello React Nexus.
+    </div>;
+  },
 
   statics: {
     styles: {
@@ -29,12 +34,6 @@ const Root = React.createClass({
         color: styles.colors.LinkActive,
       },
     },
-  },
-
-  render() {
-    return <div className='Root'>
-      Hello React Nexus.
-    </div>;
   },
 });
 

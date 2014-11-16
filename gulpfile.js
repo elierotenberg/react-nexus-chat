@@ -11,11 +11,12 @@ var cssbeautify = require('gulp-cssbeautify');
 var cssmqpacker = require('css-mqpacker');
 var csswring = require('csswring');
 var del = require('del');
-var envify = require('envify');
+var envify = require('envify/custom');
 var es6to5 = require('gulp-6to5');
 var gplumber = require('gulp-plumber');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
+var imagemin = require('gulp-imagemin');
 var insert = require('gulp-insert');
 var jshint = require('gulp-jshint');
 var path = require('path');
@@ -81,19 +82,16 @@ gulp.task('build', ['clean'], function() {
 gulp.task('compile', ['lint', 'build']);
 
 gulp.task('bundle', ['compile'], function() {
-  var b = browserify({
+  return browserify({
     fullPaths: false,
-    entries: ['dist/client.js'],
     debug: DEV,
+    entries: ['./dist/client.js'],
     ignoreMissing: ['promise'],
-  });
-  b.transform('brfs');
-  b.transform(envify({ NODE_ENV: DEV }));
-
-  return b.bundle()
+  })
+  .transform(envify({ NODE_ENV: DEV }))
+  .bundle()
   .pipe(plumber())
   .pipe(source('c.js'))
-  .pipe(buffer())
   .pipe(gulp.dest('dist'));
 });
 

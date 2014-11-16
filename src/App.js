@@ -10,7 +10,7 @@ const router = require('./router');
 class App extends R.App {
   getFluxClass() { return Flux; }
 
-  getRootclass() { return Root; }
+  getRootClass() { return Root; }
 
   getTemplate() { return template; }
 
@@ -20,7 +20,7 @@ class App extends R.App {
     return { title, description, canonical, lang };
   }
 
-  getPluginClasses() {
+  getPluginsClasses() {
     return [
       R.Plugins.History({ storeName: 'memory', dispatcherName: 'memory' }),
       R.Plugins.Window({ storeName: 'memory', dispatcherName: 'memory' }),
