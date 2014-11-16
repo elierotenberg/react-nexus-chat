@@ -1,6 +1,5 @@
 const R = require('react-nexus');
 const _ = R._;
-const should = R.should;
 
 const { supportedLocales } = require('./common');
 const Flux = require('./Flux');
@@ -15,8 +14,8 @@ class App extends R.App {
 
   getTemplate() { return template; }
 
-  *getTemplateVars({ req }) {
-    let { title, description, canonical } = yield _.pick(router.match(req.pathname), ['title', 'description', 'canonical']);
+  *getTemplateVars({ req }) { // jshint ignore:line
+    let { title, description, canonical } = yield _.pick(router.match(req.pathname), ['title', 'description', 'canonical']); // jshint ignore:line
     let lang = R.Localize.bestLocale(req.headers['accept-langage'], supportedLocales);
     return { title, description, canonical, lang };
   }
