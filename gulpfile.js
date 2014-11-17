@@ -36,10 +36,10 @@ function plumber() {
 
 var DEV = process.env.NODE_ENV !== 'production';
 if(DEV) {
-  console.log('gulp started in DEVELOPMENT mode. Set NODE_ENV="production" before deploying.');
+  console.log('gulp started in DEVELOPMENT mode; start with NODE_ENV="production" before deploying.');
 }
 else {
-  console.log('gulp started in PRODUCTION mode. Set NODE_ENV="development" to get more runtime-checks.');
+  console.log('gulp started in PRODUCTION mode; start with NODE_ENV="development" to get more runtime-checks.');
 }
 
 gulp.task('clean', function(fn) {

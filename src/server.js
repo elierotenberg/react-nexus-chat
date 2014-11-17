@@ -16,17 +16,9 @@ express()
 .use((new App()).prerender)
 .listen(common.render.port);
 
-
-// Uplink server
-let uplink = express().use(cors());
-(new UplinkSimpleServer({
-  guid: _.guid(),
-  stores: [
-  ],
-  rooms: [
-  ],
-  actions: [
-  ]
-})).attach(uplink);
-uplink.listen(common.uplink.port);
-
+(new UplinkSimpleServer({ guid: _.guid(),
+  stores: [],
+  rooms: [],
+  actions: [],
+  app: express().use(cors()),
+})).listen(common.uplink.port);
