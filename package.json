@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./dist/server.js"
   },
   "repository": {
     "type": "git",
@@ -52,8 +52,8 @@
     "gulp-react-nexus-style": "^0.1.4",
     "lodash-next": "^1.4.0",
     "nexus-router": "^0.1.4",
-    "nexus-uplink-client": "^0.5.0",
-    "nexus-uplink-simple-server": "^0.4.0",
+    "nexus-uplink-client": "^0.5.2",
+    "nexus-uplink-simple-server": "^0.6.0",
     "react-nexus": "git://github.com/elierotenberg/react-rails#1.0-rc",
     "should": "^4.2.1"
   }

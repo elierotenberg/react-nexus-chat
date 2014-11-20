@@ -38,7 +38,7 @@ function plumber() {
 };
 
 if(__DEV__) {
-  console.log('gulp started in __DEV__ELOPMENT mode; start with NODE_ENV="production" before deploying.');
+  console.log('gulp started in DEVELOPMENT mode; start with NODE_ENV="production" before deploying.');
 }
 else {
   console.log('gulp started in PRODUCTION mode; start with NODE_ENV="development" to get more runtime-checks.');
