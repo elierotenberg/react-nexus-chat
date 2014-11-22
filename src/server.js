@@ -20,7 +20,8 @@ express()
 .use((new App()).prerender)
 .listen(common.render.port, listening('render', common.render.port));
 
-(new UplinkSimpleServer({ guid: _.guid(),
+(new UplinkSimpleServer({
+  pid: _.guid('pid'),
   stores: [],
   rooms: [],
   actions: [],
