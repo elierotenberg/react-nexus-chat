@@ -50,11 +50,11 @@
     "cors": "^2.5.2",
     "express": "^4.10.2",
     "gulp-react-nexus-style": "^0.1.4",
-    "lodash-next": "^1.4.0",
+    "lodash-next": "^1.6.0",
     "nexus-router": "^0.1.4",
-    "nexus-uplink-client": "^0.5.2",
-    "nexus-uplink-simple-server": "^0.6.0",
-    "react-nexus": "git://github.com/elierotenberg/react-rails#1.0-rc",
+    "nexus-uplink-client": "^0.5.3",
+    "nexus-uplink-simple-server": "^0.6.1",
+    "react-nexus": "^0.9.1",
     "should": "^4.2.1"
   }
 }
