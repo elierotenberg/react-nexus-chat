@@ -80,6 +80,7 @@
 
     // Custom Globals
     "globals"       : {        // additional predefined global variables
-      "Promise"     : true
+      "Promise"     : true,
+      "__DEV__"     : true
     }
   }
