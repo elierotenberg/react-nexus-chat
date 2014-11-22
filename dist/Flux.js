@@ -43,24 +43,24 @@ var Flux = (function (R) {
   _classProps(Flux, null, {
     bootstrap: {
       writable: true,
-      value: regeneratorRuntime.mark(function callee$1$0() {
+      value: regeneratorRuntime.mark(function _callee() {
         var _this = this;
         var uplink;
-        return regeneratorRuntime.wrap(function callee$1$0$(context$2$0) {
-          while (true) switch (context$2$0.prev = context$2$0.next) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (true) switch (_context.prev = _context.next) {
             case 0: // jshint ignore:line
               _this.registerStore("memory", new R.Store.MemoryStore()).registerEventEmitter("memory", new R.EventEmitter.MemoryEventEmitter()).registerDispatcher("memory", new R.Dispatcher(memoryActionHandlers(_this)));
 
               uplink = _this.uplink = new Uplink({ url: common.uplink.url, guid: _this.guid });
-              context$2$0.next = 4;
+              _context.next = 4;
               return uplink.handshake;
             case 4: // jshint ignore:line
 
               _this.registerStore("uplink", new R.Store.UplinkStore({ uplink: uplink })).registerEventEmitter("uplink", new R.EventEmitter.UplinkEventEmitter({ uplink: uplink })).registerDispatcher("uplink", new R.Dispatcher(uplinkActionHandlers(_this)));
             case 5:
-            case "end": return context$2$0.stop();
+            case "end": return _context.stop();
           }
-        }, callee$1$0, this);
+        }, _callee, this);
       })
     },
     destroy: {

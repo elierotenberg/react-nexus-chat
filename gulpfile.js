@@ -15,7 +15,6 @@ var es6to5 = require('gulp-6to5');
 var gplumber = require('gulp-plumber');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
-var imagemin = require('gulp-imagemin');
 var insert = require('gulp-insert');
 var jshint = require('gulp-jshint');
 var path = require('path');
