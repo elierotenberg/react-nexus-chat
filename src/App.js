@@ -16,7 +16,7 @@ class App extends R.App {
 
   *getTemplateVars({ req }) { // jshint ignore:line
     let { title, description, canonical } = yield _.pick(router.match(req.pathname), ['title', 'description', 'canonical']); // jshint ignore:line
-    let lang = R.Localize.bestLocale(req.headers['accept-langage'], supportedLocales);
+    let lang = R.Plugins.Localize.bestLocale(req.headers['accept-langage'], supportedLocales).language;
     return { title, description, canonical, lang };
   }
 

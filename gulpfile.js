@@ -3,14 +3,12 @@ var _ = require('lodash-next');
 
 var addsrc = require('gulp-add-src');
 var autoprefixer = require('autoprefixer-core')({ cascade: true });
-var browserify = require('browserify');
 var buffer = require('vinyl-buffer');
 var concat = require('gulp-concat');
 var cssbeautify = require('gulp-cssbeautify');
 var cssmqpacker = require('css-mqpacker');
 var csswring = require('csswring');
 var del = require('del');
-var envify = require('envify/custom');
 var es6to5 = require('gulp-6to5');
 var gplumber = require('gulp-plumber');
 var gulp = require('gulp');
@@ -26,6 +24,8 @@ var sourcemaps = require('gulp-sourcemaps');
 var style = require('gulp-react-nexus-style');
 var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
+var webpack = require('webpack');
+var gwebpack = require('gulp-webpack');
 
 // Improve default error handler to get stack trace.
 function plumber() {
@@ -83,16 +83,21 @@ gulp.task('build', ['clean'], function() {
 gulp.task('compile', ['lint', 'build']);
 
 gulp.task('bundle', ['compile'], function() {
-  return browserify({
-    fullPaths: false,
-    debug: __DEV__,
-    entries: ['./dist/client.js'],
-    ignoreMissing: ['promise'],
-  })
-  .transform(envify({ NODE_ENV: __DEV__ }))
-  .bundle()
+  return gulp.src('dist/client.js')
   .pipe(plumber())
-  .pipe(source('c.js'))
+  .pipe(gwebpack({
+    plugins: [
+      new webpack.IgnorePlugin(/(promise)|(fs)/),
+      new webpack.DefinePlugin({
+        '__DEV__': JSON.stringify(__DEV__ ? true : false),
+        'process.env': {
+          NODE_ENV: JSON.stringify(__DEV__ ? 'developement' : 'production'),
+        },
+      }),
+      new webpack.optimize.DedupePlugin(),
+    ],
+  }))
+  .pipe(rename({ basename: 'c' }))
   .pipe(gulp.dest('dist'));
 });
 
@@ -126,26 +131,26 @@ gulp.task('public', ['componentsCSS', 'bundle'], function() {
 gulp.task('packJS', ['public'], function() {
   return gulp.src(['public/**/*.js', '!public/p.js', '!public/p.min.js', '!public/c.js'])
   .pipe(plumber())
-  .pipe(__DEV__ ? sourcemaps.init() : gutil.noop())
   // Add c.js later so that it always gets evaluated last
   .pipe(addsrc('public/c.js'))
   .pipe(concat('p.js'))
-  .pipe(__DEV__ ? gutil.noop() : uglify())
+  .pipe(__DEV__ ? gutil.noop() : uglify({
+    mangle: {
+      except: ['GeneratorFunction'],
+    },
+  }))
   .pipe(__DEV__ ? gutil.noop() : rename({ extname: '.min.js' }))
-  .pipe(__DEV__ ? sourcemaps.write() : gutil.noop())
   .pipe(gulp.dest('public'));
 });
 
 gulp.task('packCSS', ['public'], function() {
   return gulp.src(['public/**/*.css', '!public/p.css', '!public/p.min.css', '!public/c.css'])
   .pipe(plumber())
-  .pipe(__DEV__ ? sourcemaps.init() : gutil.noop())
   // Add c.css later so that it always gets evaluated last
   .pipe(addsrc('public/c.css'))
   .pipe(concat('p.css'))
   .pipe(__DEV__ ? gutil.noop() : postcss([cssmqpacker, csswring]))
   .pipe(__DEV__ ? gutil.noop() : rename({ extname: '.min.css' }))
-  .pipe(__DEV__ ? sourcemaps.write() : gutil.noop())
   .pipe(gulp.dest('public'));
 });
 

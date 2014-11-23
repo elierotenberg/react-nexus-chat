@@ -1,10 +1,9 @@
 /* jshint ignore:start */
 // Escape double-quotes
 const X = (x) => x.replace(/\"/g, '\\"');
-let DEV = (process.env.NODE_ENV === 'development');
 
-module.exports = ({ title, description, canonical, lang, rootHtml, serializedFlux, serializedHeaders }) =>
-  `<!doctype html${lang ? ` lang="${X(lang)}"` : ''}>
+module.exports = ({ title, description, canonical, lang, rootHtml, serializedFlux, serializedHeaders, guid }) =>
+  `<!DOCTYPE html${lang ? ` lang="${X(lang)}"` : ''}>
   <html>
     <head>
       <meta charset="utf-8">
@@ -12,7 +11,7 @@ module.exports = ({ title, description, canonical, lang, rootHtml, serializedFlu
       ${description ? `<meta name="description" content="${X(description)}">` : ''}
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>${title || ""}</title>
-      <link rel="stylesheet" type="text/css" href="/p${DEV ? '': '.min'}.css">
+      <link rel="stylesheet" type="text/css" href="/p${__DEV__ ? '': '.min'}.css">
       <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
       <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
       <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
@@ -26,7 +25,7 @@ module.exports = ({ title, description, canonical, lang, rootHtml, serializedFlu
           w.__ReactNexus = { serializedFlux: f, serializedHeaders: h, guid: g, rootElement: d.getElementById(i) };
         }(window, document, '__ReactNexusRoot', '${serializedFlux}', '${serializedHeaders}', '${guid}'))
       </script>
-      <script type="text/javascript" src="/p${DEV ? '': '.min'}.js">
+      <script type="text/javascript" src="/p${__DEV__ ? '': '.min'}.js"></script>
     </body>
   </html>
   `;
