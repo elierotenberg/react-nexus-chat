@@ -1,8 +1,6 @@
 "use strict";
 
-require("6to5/polyfill");
-var Promise = require("bluebird");var __DEV__ = (process.env.NODE_ENV !== "production");
-module.exports = {
+require("6to5/polyfill");var Promise = require("lodash-next").Promise;var __DEV__ = (process.env.NODE_ENV !== "production");var __PROD__ = !__DEV__;var __BROWSER__ = (typeof window === "object");var __NODE__ = !__BROWSER__;module.exports = {
   supportedLocales: ["en", "fr"],
   uplink: {
     port: 8080,
@@ -10,4 +8,3 @@ module.exports = {
   render: {
     port: 8000,
     url: "http://localhost:8000" } };
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvbW1vbi5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLE9BQU8sQ0FBQyxlQUFlLENBQUMsQ0FBQztBQUN6QixJQUFNLE9BQU8sR0FBRyxPQUFPLENBQUMsVUFBVSxDQUFDLENBQUMsQUFBQyxJQUFNLE9BQU8sR0FBRyxDQUFDLE9BQU8sQ0FBQyxHQUFHLENBQUMsUUFBUSxLQUFLLFlBQVksQ0FBQyxDQUFDO0FBQzdGLE1BQU0sQ0FBQyxPQUFPLEdBQUc7QUFDZixrQkFBZ0IsRUFBRSxDQUFDLElBQUksRUFBRSxJQUFJLENBQUM7QUFDOUIsUUFBTSxFQUFFO0FBQ04sUUFBSSxFQUFFLElBQUk7QUFDVixPQUFHLEVBQUUsdUJBQXVCLEVBQzdCO0FBQ0QsUUFBTSxFQUFFO0FBQ04sUUFBSSxFQUFFLElBQUk7QUFDVixPQUFHLEVBQUUsdUJBQXVCLEVBQzdCLEVBQ0YsQ0FBQyIsImZpbGUiOiJjb21tb24uanMiLCJzb3VyY2VzQ29udGVudCI6WyJtb2R1bGUuZXhwb3J0cyA9IHtcclxuICBzdXBwb3J0ZWRMb2NhbGVzOiBbJ2VuJywgJ2ZyJ10sXHJcbiAgdXBsaW5rOiB7XHJcbiAgICBwb3J0OiA4MDgwLFxyXG4gICAgdXJsOiAnaHR0cDovL2xvY2FsaG9zdDo4MDgwJyxcclxuICB9LFxyXG4gIHJlbmRlcjoge1xyXG4gICAgcG9ydDogODAwMCxcclxuICAgIHVybDogJ2h0dHA6Ly9sb2NhbGhvc3Q6ODAwMCcsXHJcbiAgfSxcclxufTtcclxuIl0sInNvdXJjZVJvb3QiOiIvc291cmNlLyJ9

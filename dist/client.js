@@ -1,17 +1,22 @@
 "use strict";
 
-require("6to5/polyfill");
-var Promise = require("bluebird");var __DEV__ = (process.env.NODE_ENV !== "production");
-var R = require("react-nexus");
+require("6to5/polyfill");var Promise = require("lodash-next").Promise;var __DEV__ = (process.env.NODE_ENV !== "production");var __PROD__ = !__DEV__;var __BROWSER__ = (typeof window === "object");var __NODE__ = !__BROWSER__;var R = require("react-nexus");
 var _ = R._;
 var App = require("./App");
 
-var client = new R.Client(new App());
-client.mount({ window: window }).then(function () {
-  return _.dev(function () {
-    return console.log("Client mounted.", client);
-  });
-})["catch"](function (err) {
-  throw err;
-});
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNsaWVudC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLE9BQU8sQ0FBQyxlQUFlLENBQUMsQ0FBQztBQUN6QixJQUFNLE9BQU8sR0FBRyxPQUFPLENBQUMsVUFBVSxDQUFDLENBQUMsQUFBQyxJQUFNLE9BQU8sR0FBRyxDQUFDLE9BQU8sQ0FBQyxHQUFHLENBQUMsUUFBUSxLQUFLLFlBQVksQ0FBQyxDQUFDO0FBQzdGLElBQU0sQ0FBQyxHQUFHLE9BQU8sQ0FBQyxhQUFhLENBQUMsQ0FBQztBQUNqQyxJQUFNLENBQUMsR0FBRyxDQUFDLENBQUMsQ0FBQyxDQUFDO0FBQ2QsSUFBTSxHQUFHLEdBQUcsT0FBTyxDQUFDLE9BQU8sQ0FBQyxDQUFDOztBQUU3QixJQUFJLE1BQU0sR0FBRyxJQUFJLENBQUMsQ0FBQyxNQUFNLENBQUMsSUFBSSxHQUFHLEVBQUUsQ0FBQyxDQUFDO0FBQ3JDLE1BQU0sQ0FBQyxLQUFLLENBQUMsRUFBRSxNQUFNLEVBQU4sTUFBTSxFQUFFLENBQUMsQ0FDdkIsSUFBSSxDQUFDO1NBQU0sQ0FBQyxDQUFDLEdBQUcsQ0FBQztXQUFNLE9BQU8sQ0FBQyxHQUFHLENBQUMsaUJBQWlCLEVBQUUsTUFBTSxDQUFDO0dBQUEsQ0FBQztDQUFBLENBQUMsU0FDMUQsQ0FBQyxVQUFDLEdBQUcsRUFBSztBQUFFLFFBQU0sR0FBRyxDQUFDO0NBQUUsQ0FBQyxDQUFDIiwiZmlsZSI6ImNsaWVudC5qcyIsInNvdXJjZXNDb250ZW50IjpbImNvbnN0IFIgPSByZXF1aXJlKCdyZWFjdC1uZXh1cycpO1xyXG5jb25zdCBfID0gUi5fO1xyXG5jb25zdCBBcHAgPSByZXF1aXJlKCcuL0FwcCcpO1xyXG5cclxudmFyIGNsaWVudCA9IG5ldyBSLkNsaWVudChuZXcgQXBwKCkpO1xyXG5jbGllbnQubW91bnQoeyB3aW5kb3cgfSlcclxuLnRoZW4oKCkgPT4gXy5kZXYoKCkgPT4gY29uc29sZS5sb2coJ0NsaWVudCBtb3VudGVkLicsIGNsaWVudCkpKVxyXG4uY2F0Y2goKGVycikgPT4geyB0aHJvdyBlcnI7IH0pO1xyXG4iXSwic291cmNlUm9vdCI6Ii9zb3VyY2UvIn0=
+var app = new App();
+var client = new R.Client({ app: app });
+_.co(regeneratorRuntime.mark(function _callee() {
+  return regeneratorRuntime.wrap(function _callee$(_context) {
+    while (true) switch (_context.prev = _context.next) {
+      case 0: _context.next = 2;
+        return client.mount({ window: window });
+      case 2:
+        _.dev(function () {
+          return console.log("Client mounted.", client);
+        });
+      case 3:
+      case "end": return _context.stop();
+    }
+  }, _callee, this);
+}));

@@ -1,4 +1,4 @@
-require('6to5/polyfill'); var Promise = global.Promise = require('bluebird'); var __DEV__ = (process.env.NODE_ENV !== 'production');
+var __NODE__ = !__BROWSER__; var __BROWSER__ = (typeof window === "object"); var __PROD__ = !__DEV__; var __DEV__ = (process.env.NODE_ENV !== "production"); var Promise = require("lodash-next").Promise; require("6to5/polyfill");
 var _ = require('lodash-next');
 
 var addsrc = require('gulp-add-src');
@@ -13,6 +13,7 @@ var es6to5 = require('gulp-6to5');
 var gplumber = require('gulp-plumber');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
+var gwebpack = require('gulp-webpack');
 var insert = require('gulp-insert');
 var jshint = require('gulp-jshint');
 var path = require('path');
@@ -25,7 +26,7 @@ var style = require('gulp-react-nexus-style');
 var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
 var webpack = require('webpack');
-var gwebpack = require('gulp-webpack');
+var wrap = require('gulp-wrap');
 
 // Improve default error handler to get stack trace.
 function plumber() {
@@ -72,11 +73,15 @@ gulp.task('lint', ['lintJS', 'lintJSX']);
 gulp.task('build', ['clean'], function() {
   return gulp.src(['src/**/*.js', 'src/**/*.jsx'])
   .pipe(plumber())
-  .pipe(__DEV__ ? sourcemaps.init() : gutil.noop())
-  .pipe(insert.prepend('require(\'6to5/polyfill\');\nconst Promise = require(\'bluebird\'); const __DEV__ = (process.env.NODE_ENV !== \'production\');\n'))
-  .pipe(rename({ extname: '.js' }))
+  .pipe(react())
+  .pipe(insert.prepend(
+    'require(\'6to5/polyfill\'); ' +
+    'const Promise = require(\'lodash-next\').Promise; ' +
+    'const __DEV__ = (process.env.NODE_ENV !== \'production\'); ' +
+    'const __PROD__ = !__DEV__; ' +
+    'const __BROWSER__ = (typeof window === \'object\'); ' +
+    'const __NODE__ = !__BROWSER__; '))
   .pipe(es6to5())
-  .pipe(__DEV__ ? sourcemaps.write() : gutil.noop())
   .pipe(gulp.dest('dist'));
 });
 
@@ -86,10 +91,15 @@ gulp.task('bundle', ['compile'], function() {
   return gulp.src('dist/client.js')
   .pipe(plumber())
   .pipe(gwebpack({
+    debug: __DEV__,
+    devtool: __DEV__ && 'eval',
     plugins: [
-      new webpack.IgnorePlugin(/(promise)|(fs)/),
+      new webpack.IgnorePlugin(/^fs$/),
       new webpack.DefinePlugin({
-        '__DEV__': JSON.stringify(__DEV__ ? true : false),
+        '__DEV__': JSON.stringify(__DEV__),
+        '__PROD__': JSON.stringify(__PROD__),
+        '__BROWSER__': JSON.stringify(true),
+        '__NODE__': JSON.stringify(false),
         'process.env': {
           NODE_ENV: JSON.stringify(__DEV__ ? 'developement' : 'production'),
         },
@@ -133,6 +143,8 @@ gulp.task('packJS', ['public'], function() {
   .pipe(plumber())
   // Add c.js later so that it always gets evaluated last
   .pipe(addsrc('public/c.js'))
+  // Wrap each file in an IIFE.
+  .pipe(wrap('(function() {\n<%= contents %>\n})();\n'))
   .pipe(concat('p.js'))
   .pipe(__DEV__ ? gutil.noop() : uglify({
     mangle: {

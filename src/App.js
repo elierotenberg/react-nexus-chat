@@ -7,6 +7,10 @@ const Root = require('./components/Root');
 const template = require('./template');
 const router = require('./router');
 
+const History = R.Plugins.History({ storeName: 'memory', dispatcherName: 'memory' });
+const Window = R.Plugins.Window({ storeName: 'memory', dispatcherName: 'memory' });
+const Localize = R.Plugins.Localize({ storeName: 'memory', dispatcherName: 'memory', supportedLocales });
+
 class App extends R.App {
   getFluxClass() { return Flux; }
 
@@ -21,11 +25,7 @@ class App extends R.App {
   }
 
   getPluginsClasses() {
-    return [
-      R.Plugins.History({ storeName: 'memory', dispatcherName: 'memory' }),
-      R.Plugins.Window({ storeName: 'memory', dispatcherName: 'memory' }),
-      R.Plugins.Localize({ storeName: 'memory', dispatcherName: 'memory', supportedLocales }),
-    ];
+    return [History, Window, Localize];
   }
 }
 
