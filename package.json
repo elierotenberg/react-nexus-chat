@@ -44,7 +44,7 @@
     "vinyl-source-stream": "^1.0.0"
   },
   "dependencies": {
-    "6to5": "^1.13.1",
+    "6to5": "^1.13.4",
     "bluebird": "^2.3.11",
     "co": "^4.0.0",
     "cors": "^2.5.2",
@@ -52,10 +52,10 @@
     "gulp-react-nexus-style": "^0.2.0",
     "http-exceptions": "^0.4.0",
     "lodash-next": "^1.7.0",
-    "nexus-router": "^0.2.1",
+    "nexus-router": "^0.3.0",
     "nexus-uplink-client": "^0.7.0",
-    "nexus-uplink-simple-server": "^0.11.0",
-    "react-nexus": "^0.13.2",
+    "nexus-uplink-simple-server": "^0.11.1",
+    "react-nexus": "^0.13.3",
     "should": "^4.3.0"
   }
 }
