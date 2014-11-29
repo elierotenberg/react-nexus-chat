@@ -91,8 +91,14 @@ gulp.task('bundle', ['compile'], function() {
   return gulp.src('dist/client.js')
   .pipe(plumber())
   .pipe(gwebpack({
+    target: 'web',
     debug: __DEV__,
     devtool: __DEV__ && 'eval',
+    module: {
+      loaders: [
+        { test: /\.json$/, loader: 'json-loader' },
+      ],
+    },
     plugins: [
       new webpack.IgnorePlugin(/^fs$/),
       new webpack.DefinePlugin({
