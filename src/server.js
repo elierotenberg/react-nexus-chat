@@ -1,30 +1,40 @@
 const R = require('react-nexus');
 const _ = R._;
-const UplinkSimpleServer = require('nexus-uplink-simple-server');
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
+const cluster = require('cluster');
 
 const common = require('./common');
-const App = require('./App');
+const render = require('./render');
+const uplink = require('./uplink');
 
 function listening(name, port) {
   return () => console.log(`${name} listening on port ${port}.`);
 }
 
-// Render + static server
-express()
-.use(cors())
-.use(express.static(path.join(__dirname, '..', 'public')))
-.get('/favicon.ico', (req, res) => res.status(404).send(null))
-.use((new App()).prerender)
-.listen(common.render.port, listening('render', common.render.port));
+const ROLE_UPLINK = 'uplink';
+const ROLE_RENDER = 'render';
+const workers = { [ROLE_UPLINK]: uplink, [ROLE_RENDER]: render };
 
-(new UplinkSimpleServer({
-  pid: _.guid('pid'),
-  stores: [],
-  rooms: [],
-  actions: [],
-  app: express().use(cors()),
-}))
-.listen(common.uplink.port, listening('uplink', common.uplink.port));
+function fork(CLUSTER_ROLE) {
+  cluster.fork({ CLUSTER_ROLE })
+  .on('online', () => {
+    _.dev(() => console.warn(`worker ${CLUSTER_ROLE} is online.`));
+  })
+  .on('exit', (code, signal) => {
+    _.dev(() => console.warn(`Worker ${CLUSTER_ROLE} exited with code ${code} and signal ${signal}.`));
+    fork(CLUSTER_ROLE);
+  });
+}
+
+if(cluster.isMaster) {
+  Object.keys(workers).forEach(fork);
+}
+
+else {
+  const role = process.env.CLUSTER_ROLE;
+  _.dev(() => (role !== void 0).should.be.ok &&
+    (workers[role] !== void 0).should.be.ok &&
+    workers[role].should.be.a.Function
+  );
+  workers[role]()
+  .listen(common[role].port, listening(role, common[role].port));
+}

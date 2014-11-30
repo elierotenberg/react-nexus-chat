@@ -5,9 +5,21 @@ const styles = require('../styles');
 const Root = React.createClass({
   mixins: [R.Root.Mixin],
 
+  getInitialState() {
+    return {
+      '/tick': null,
+    };
+  },
+
+  getFluxStoreSubscriptions() {
+    return {
+      'tick': '/uplink/tick',
+    };
+  },
+
   render() {
     return <div className='Root'>
-      Hello React Nexus.
+      Hello React Nexus. Now is {this.state.tick}
     </div>;
   },
 

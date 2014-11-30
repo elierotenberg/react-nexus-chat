@@ -66,7 +66,7 @@ gulp.task('lintJSX', ['clean'], function() {
   .pipe(react())
   .pipe(jshint({ quotmark: false }))
   .pipe(jshint.reporter(stylish));
-})
+});
 
 gulp.task('lint', ['lintJS', 'lintJSX']);
 
@@ -76,7 +76,7 @@ gulp.task('build', ['clean'], function() {
   .pipe(react())
   .pipe(insert.prepend(
     'require(\'6to5/polyfill\'); ' +
-    'const Promise = require(\'lodash-next\').Promise; ' +
+    'const Promise = (global || window).Promise = require(\'lodash-next\').Promise; ' +
     'const __DEV__ = (process.env.NODE_ENV !== \'production\'); ' +
     'const __PROD__ = !__DEV__; ' +
     'const __BROWSER__ = (typeof window === \'object\'); ' +
@@ -179,6 +179,6 @@ gulp.task('finalize', ['pack'], function(fn) {
     return fn(null);
   }
   del(['public/c.css', 'public/c.js', 'public/native.history.js', 'public/normalize.css'], fn);
-})
+});
 
 gulp.task('default', ['finalize']);

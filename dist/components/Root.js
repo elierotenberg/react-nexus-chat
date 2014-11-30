@@ -1,14 +1,24 @@
 "use strict";
 
-require("6to5/polyfill");var Promise = require("lodash-next").Promise;var __DEV__ = (process.env.NODE_ENV !== "production");var __PROD__ = !__DEV__;var __BROWSER__ = (typeof window === "object");var __NODE__ = !__BROWSER__;var R = require("react-nexus");
+require("6to5/polyfill");var Promise = (global || window).Promise = require("lodash-next").Promise;var __DEV__ = (process.env.NODE_ENV !== "production");var __PROD__ = !__DEV__;var __BROWSER__ = (typeof window === "object");var __NODE__ = !__BROWSER__;var R = require("react-nexus");
 var React = R.React;
 var styles = require("../styles");
 
 var Root = React.createClass({ displayName: "Root",
   mixins: [R.Root.Mixin],
 
+  getInitialState: function () {
+    return {
+      "/tick": null };
+  },
+
+  getFluxStoreSubscriptions: function () {
+    return {
+      tick: "/uplink/tick" };
+  },
+
   render: function () {
-    return React.createElement("div", { className: "Root" }, "Hello React Nexus.");
+    return React.createElement("div", { className: "Root" }, "Hello React Nexus. Now is ", this.state.tick);
   },
 
   statics: {
