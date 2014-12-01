@@ -7,19 +7,19 @@ const Root = React.createClass({
 
   getInitialState() {
     return {
-      '/tick': null,
+      '/clock': null,
     };
   },
 
   getFluxStoreSubscriptions() {
     return {
-      'tick': '/uplink/tick',
+      'clock': 'uplink://clock',
     };
   },
 
   render() {
     return <div className='Root'>
-      Hello React Nexus. Now is {this.state.tick}
+      Hello React Nexus. Now is {this.state.clock.tick}
     </div>;
   },
 

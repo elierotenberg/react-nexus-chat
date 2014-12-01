@@ -9,16 +9,16 @@ var Root = React.createClass({ displayName: "Root",
 
   getInitialState: function () {
     return {
-      "/tick": null };
+      "/clock": null };
   },
 
   getFluxStoreSubscriptions: function () {
     return {
-      tick: "/uplink/tick" };
+      clock: "uplink://clock" };
   },
 
   render: function () {
-    return React.createElement("div", { className: "Root" }, "Hello React Nexus. Now is ", this.state.tick);
+    return React.createElement("div", { className: "Root" }, "Hello React Nexus. Now is ", this.state.clock.tick);
   },
 
   statics: {
