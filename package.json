@@ -55,6 +55,6 @@
     "nexus-router": "^0.3.7",
     "nexus-uplink-client": "^0.8.8",
     "nexus-uplink-simple-server": "^0.12.3",
-    "react-nexus": "^0.15.7"
+    "react-nexus": "^0.15.8"
   }
 }
