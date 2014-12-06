@@ -5,12 +5,6 @@ const styles = require('../styles');
 const Root = React.createClass({
   mixins: [R.Root.Mixin],
 
-  getInitialState() {
-    return {
-      '/clock': null,
-    };
-  },
-
   getFluxStoreSubscriptions() {
     return {
       'clock': 'uplink://clock',
@@ -19,7 +13,7 @@ const Root = React.createClass({
 
   render() {
     return <div className='Root'>
-      Hello React Nexus. Now is {this.state.clock.tick}
+      Hello React Nexus. Now is {this.state.clock ? this.state.clock.now : '(unknown)'}
     </div>;
   },
 

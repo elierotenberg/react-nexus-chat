@@ -31,7 +31,7 @@
     "gulp-plumber": "^0.6.6",
     "gulp-postcss": "^3.0.0",
     "gulp-react": "^2.0.0",
-    "gulp-react-nexus-style": "^0.3.6",
+    "gulp-react-nexus-style": "^0.3.7",
     "gulp-rename": "^1.2.0",
     "gulp-sourcemaps": "^1.2.8",
     "gulp-uglify": "^1.0.2",
@@ -46,15 +46,15 @@
     "webpack": "^1.4.13"
   },
   "dependencies": {
-    "6to5": "^1.14.16",
+    "6to5": "^1.14.17",
     "cors": "^2.5.2",
     "express": "^4.10.4",
     "gulp-react-nexus-style": "^0.2.0",
-    "http-exceptions": "^0.4.8",
-    "lodash-next": "^1.9.2",
-    "nexus-router": "^0.3.10",
-    "nexus-uplink-client": "^0.8.11",
-    "nexus-uplink-simple-server": "^0.12.7",
-    "react-nexus": "^0.16.4"
+    "http-exceptions": "^0.4.9",
+    "lodash-next": "^1.10.1",
+    "nexus-router": "^0.3.11",
+    "nexus-uplink-client": "^0.8.17",
+    "nexus-uplink-simple-server": "^0.12.12",
+    "react-nexus": "^0.16.8"
   }
 }

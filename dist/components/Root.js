@@ -7,18 +7,13 @@ var styles = require("../styles");
 var Root = React.createClass({ displayName: "Root",
   mixins: [R.Root.Mixin],
 
-  getInitialState: function () {
-    return {
-      "/clock": null };
-  },
-
   getFluxStoreSubscriptions: function () {
     return {
       clock: "uplink://clock" };
   },
 
   render: function () {
-    return React.createElement("div", { className: "Root" }, "Hello React Nexus. Now is ", this.state.clock.tick);
+    return React.createElement("div", { className: "Root" }, "Hello React Nexus. Now is ", this.state.clock ? this.state.clock.now : "(unknown)");
   },
 
   statics: {
