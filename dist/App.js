@@ -1,10 +1,5 @@
 "use strict";
 
-var _classProps = function (child, staticProps, instanceProps) {
-  if (staticProps) Object.defineProperties(child, staticProps);
-  if (instanceProps) Object.defineProperties(child.prototype, instanceProps);
-};
-
 var _extends = function (child, parent) {
   child.prototype = Object.create(parent.prototype, {
     constructor: {
@@ -19,6 +14,7 @@ var _extends = function (child, parent) {
 
 require("6to5/polyfill");var Promise = (global || window).Promise = require("lodash-next").Promise;var __DEV__ = (process.env.NODE_ENV !== "production");var __PROD__ = !__DEV__;var __BROWSER__ = (typeof window === "object");var __NODE__ = !__BROWSER__;var R = require("react-nexus");
 var _ = R._;
+var url = require("url");
 
 var _ref = require("./common");
 
@@ -39,53 +35,41 @@ var App = (function (R) {
 
   _extends(App, R.App);
 
-  _classProps(App, null, {
-    getFluxClass: {
-      writable: true,
-      value: function () {
-        return Flux;
+  App.prototype.getFluxClass = function () {
+    return Flux;
+  };
+
+  App.prototype.getRootClass = function () {
+    return Root;
+  };
+
+  App.prototype.getTemplate = function () {
+    return template;
+  };
+
+  App.prototype.getTemplateVars = regeneratorRuntime.mark(function _callee(_ref2) {
+    var req, _ref3, pathname, _ref4, title, description, canonical, lang;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (true) switch (_context.prev = _context.next) {
+        case 0: req = _ref2.req;
+          _ref3 = url.parse(req.url);
+          pathname = _ref3.pathname;
+          _context.next = 5;
+          return _.pick(router.match(pathname), ["title", "description", "canonical"]);
+        case 5: _ref4 = _context.sent;
+          title = _ref4.title;
+          description = _ref4.description;
+          canonical = _ref4.canonical;
+          lang = R.Plugins.Localize.bestLocale(req.headers["accept-langage"], supportedLocales).language;
+          return _context.abrupt("return", { title: title, description: description, canonical: canonical, lang: lang });
+        case 11:
+        case "end": return _context.stop();
       }
-    },
-    getRootClass: {
-      writable: true,
-      value: function () {
-        return Root;
-      }
-    },
-    getTemplate: {
-      writable: true,
-      value: function () {
-        return template;
-      }
-    },
-    getTemplateVars: {
-      writable: true,
-      value: regeneratorRuntime.mark(function _callee(_ref2) {
-        var req, _ref3, title, description, canonical, lang;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (true) switch (_context.prev = _context.next) {
-            case 0: req = _ref2.req;
-              _context.next = 3;
-              return _.pick(router.match(req.pathname), ["title", "description", "canonical"]);
-            case 3: _ref3 = _context.sent;
-              title = _ref3.title;
-              description = _ref3.description;
-              canonical = _ref3.canonical;
-              lang = R.Plugins.Localize.bestLocale(req.headers["accept-langage"], supportedLocales).language;
-              return _context.abrupt("return", { title: title, description: description, canonical: canonical, lang: lang });
-            case 9:
-            case "end": return _context.stop();
-          }
-        }, _callee, this);
-      })
-    },
-    getPluginsClasses: {
-      writable: true,
-      value: function () {
-        return [History, Window, Localize];
-      }
-    }
+    }, _callee, this);
   });
+  App.prototype.getPluginsClasses = function () {
+    return [History, Window, Localize];
+  };
 
   return App;
 })(R);
