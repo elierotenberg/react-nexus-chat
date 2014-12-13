@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/elierotenberg/nexus-react-starterkit",
   "devDependencies": {
-    "autoprefixer-core": "^4.0.1",
+    "autoprefixer-core": "^4.0.2",
     "css-mqpacker": "^2.0.0",
     "csswring": "^2.0.0",
     "del": "^1.1.0",
@@ -31,7 +31,7 @@
     "gulp-plumber": "^0.6.6",
     "gulp-postcss": "^3.0.0",
     "gulp-react": "^2.0.0",
-    "gulp-react-nexus-style": "^0.3.8",
+    "gulp-react-nexus-style": "^0.3.9",
     "gulp-rename": "^1.2.0",
     "gulp-sourcemaps": "^1.2.8",
     "gulp-uglify": "^1.0.2",
@@ -46,15 +46,15 @@
     "webpack": "^1.4.13"
   },
   "dependencies": {
-    "6to5": "^1.14.17",
+    "6to5": "^1.15.0",
     "cors": "^2.5.2",
-    "express": "^4.10.4",
+    "express": "^4.10.6",
     "gulp-react-nexus-style": "^0.2.0",
-    "http-exceptions": "^0.4.10",
-    "lodash-next": "^1.10.3",
-    "nexus-router": "^0.3.12",
-    "nexus-uplink-client": "^0.9.1",
-    "nexus-uplink-simple-server": "^0.12.13",
-    "react-nexus": "^0.16.9"
+    "http-exceptions": "^0.4.11",
+    "lodash-next": "^1.10.4",
+    "nexus-router": "^0.3.13",
+    "nexus-uplink-client": "^0.10.1",
+    "nexus-uplink-simple-server": "^0.12.20",
+    "react-nexus": "^0.16.11"
   }
 }
