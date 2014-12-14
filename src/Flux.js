@@ -19,8 +19,7 @@ class Flux extends R.Flux {
     .registerEventEmitter('memory', new R.EventEmitter.MemoryEventEmitter())
     .registerDispatcher('memory', new R.Dispatcher(memoryActionHandlers(this)));
 
-    let uplink = this.uplink = new Uplink({ url: common.uplink.url, guid: this.guid });
-    yield uplink.handshake; // jshint ignore:line
+    const uplink = this.uplink = new Uplink({ url: common.uplink.url, guid: this.guid });
 
     this
     .registerStore('uplink', new R.Store.UplinkStore({ uplink }))

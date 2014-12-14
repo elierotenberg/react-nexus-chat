@@ -42,12 +42,10 @@ var Flux = (function (R) {
           _this.registerStore("memory", new R.Store.MemoryStore()).registerEventEmitter("memory", new R.EventEmitter.MemoryEventEmitter()).registerDispatcher("memory", new R.Dispatcher(memoryActionHandlers(_this)));
 
           uplink = _this.uplink = new Uplink({ url: common.uplink.url, guid: _this.guid });
-          _context.next = 4;
-          return uplink.handshake;
-        case 4: // jshint ignore:line
+
 
           _this.registerStore("uplink", new R.Store.UplinkStore({ uplink: uplink })).registerEventEmitter("uplink", new R.EventEmitter.UplinkEventEmitter({ uplink: uplink })).registerDispatcher("uplink", new R.Dispatcher(uplinkActionHandlers(_this)));
-        case 5:
+        case 3:
         case "end": return _context.stop();
       }
     }, _callee, this);
