@@ -31,7 +31,7 @@
     "gulp-plumber": "^0.6.6",
     "gulp-postcss": "^3.0.0",
     "gulp-react": "^2.0.0",
-    "gulp-react-nexus-style": "^0.3.9",
+    "gulp-react-nexus-style": "^1.0.0",
     "gulp-rename": "^1.2.0",
     "gulp-sourcemaps": "^1.2.8",
     "gulp-uglify": "^1.0.2",
@@ -53,8 +53,8 @@
     "http-exceptions": "^0.4.11",
     "lodash-next": "^1.10.4",
     "nexus-router": "^0.3.13",
-    "nexus-uplink-client": "^1.0.1",
+    "nexus-uplink-client": "^1.0.3",
     "nexus-uplink-simple-server": "^1.0.0",
-    "react-nexus": "^0.16.12"
+    "react-nexus": "^1.0.0"
   }
 }

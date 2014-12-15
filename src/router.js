@@ -1,14 +1,9 @@
 const R = require('react-nexus');
 
 const router = new R.Router({
-  '/about': () => ({
-    title: 'About',
-    description: 'About React Nexus Starterkit',
-    canonical: '/about',
-  }),
 }).default(() => ({
-  title: 'Home',
-  description: 'Homepage of React Nexus Starterkit',
+  title: 'React Nexus Chat',
+  description: 'A simple chat webapp built with React Nexus',
   canonical: '/',
 }));
 

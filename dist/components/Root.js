@@ -4,24 +4,23 @@ require("6to5/polyfill");var Promise = (global || window).Promise = require("lod
 var React = R.React;
 var styles = require("../styles");
 
+var ChatRoom = require("./ChatRoom");
+
 var Root = React.createClass({ displayName: "Root",
   mixins: [R.Root.Mixin],
 
-  getFluxStoreSubscriptions: function () {
-    return {
-      clock: "uplink://clock",
-      users: "uplink://users" };
-  },
-
   render: function () {
-    return React.createElement("div", { className: "Root" }, "Hello React Nexus. Now is ", this.state.clock ? this.state.clock.now : "(unknown)", " and there are ", this.state.users ? this.state.users.count : "(unknown)", " active users.");
+    return React.createElement("div", { className: "Root" }, React.createElement(ChatRoom, null));
   },
 
   statics: {
     styles: {
       "html, body": {
         color: styles.colors.Text,
-        fontFamily: styles.fonts.Roboto },
+        fontFamily: styles.fonts.Roboto,
+        width: "100%",
+        height: "100%",
+        margin: "0 auto" },
 
       "a, a:hover, a:visited, a:active": {
         textDecoration: "none" },
@@ -33,6 +32,11 @@ var Root = React.createClass({ displayName: "Root",
         color: styles.colors.LinkHover },
 
       "a:active": {
-        color: styles.colors.LinkActive } } } });
+        color: styles.colors.LinkActive },
+
+      ".Root": {
+        width: 1024,
+        height: 640,
+        margin: "0 auto" } } } });
 
 module.exports = Root;
