@@ -9,11 +9,12 @@ var Root = React.createClass({ displayName: "Root",
 
   getFluxStoreSubscriptions: function () {
     return {
-      clock: "uplink://clock" };
+      clock: "uplink://clock",
+      users: "uplink://users" };
   },
 
   render: function () {
-    return React.createElement("div", { className: "Root" }, "Hello React Nexus. Now is ", this.state.clock ? this.state.clock.now : "(unknown)");
+    return React.createElement("div", { className: "Root" }, "Hello React Nexus. Now is ", this.state.clock ? this.state.clock.now : "(unknown)", " and there are ", this.state.users ? this.state.users.count : "(unknown)", " active users.");
   },
 
   statics: {

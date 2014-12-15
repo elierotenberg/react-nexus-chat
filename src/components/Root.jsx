@@ -8,12 +8,13 @@ const Root = React.createClass({
   getFluxStoreSubscriptions() {
     return {
       'clock': 'uplink://clock',
+      'users': 'uplink://users',
     };
   },
 
   render() {
     return <div className='Root'>
-      Hello React Nexus. Now is {this.state.clock ? this.state.clock.now : '(unknown)'}
+      Hello React Nexus. Now is {this.state.clock ? this.state.clock.now : '(unknown)'} and there are {this.state.users ? this.state.users.count : '(unknown)'} active users.
     </div>;
   },
 

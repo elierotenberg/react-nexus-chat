@@ -53,8 +53,8 @@
     "http-exceptions": "^0.4.11",
     "lodash-next": "^1.10.4",
     "nexus-router": "^0.3.13",
-    "nexus-uplink-client": "^0.11.5",
-    "nexus-uplink-simple-server": "^0.13.2",
+    "nexus-uplink-client": "^1.0.1",
+    "nexus-uplink-simple-server": "^1.0.0",
     "react-nexus": "^0.16.12"
   }
 }
