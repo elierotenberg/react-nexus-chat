@@ -1,7 +1,7 @@
 {
-  "name": "nexus-react-starterkit",
-  "version": "0.0.0",
-  "homepage": "https://github.com/elierotenberg/nexus-react-starterkit",
+  "name": "react-nexus-chat",
+  "version": "0.3.0",
+  "homepage": "https://github.com/elierotenberg/react-nexus-chat",
   "authors": [
     "Elie Rotenberg <elie@rotenberg.io>"
   ],

@@ -6,10 +6,6 @@ const common = require('./common');
 const render = require('./render');
 const uplink = require('./uplink');
 
-function listening(name, port) {
-  return () => console.log(`${name} listening on port ${port}.`);
-}
-
 const ROLE_UPLINK = 'uplink';
 const ROLE_RENDER = 'render';
 const workers = { [ROLE_UPLINK]: uplink, [ROLE_RENDER]: render };
@@ -25,16 +21,25 @@ function fork(CLUSTER_ROLE) {
   });
 }
 
-if(cluster.isMaster) {
-  Object.keys(workers).forEach(fork);
+function run(CLUSTER_ROLE) {
+  _.dev(() => (CLUSTER_ROLE !== void 0).should.be.ok &&
+    (workers[CLUSTER_ROLE] !== void 0).should.be.ok &&
+    workers[CLUSTER_ROLE].should.be.a.Function
+  );
+  workers[CLUSTER_ROLE]()
+  .listen(common[CLUSTER_ROLE].port, () => _.dev(() => console.warn(`${CLUSTER_ROLE} listening on port ${common[CLUSTER_ROLE].port}.`)));
 }
 
+if(__DEV__) {
+  console.warn('Running in DEVELOPMENT mode (single process-mode, debugging messages, runtime checks).');
+  console.warn('Switch the NODE_ENV flag to \'production\' to enable multi-process mode and run optimized code.');
+  Object.keys(workers).forEach(run);
+}
 else {
-  const role = process.env.CLUSTER_ROLE;
-  _.dev(() => (role !== void 0).should.be.ok &&
-    (workers[role] !== void 0).should.be.ok &&
-    workers[role].should.be.a.Function
-  );
-  workers[role]()
-  .listen(common[role].port, listening(role, common[role].port));
+  if(cluster.isMaster) {
+    Object.keys(workers).forEach(fork);
+  }
+  else {
+    run(process.env.CLUSTER_ROLE);
+  }
 }
