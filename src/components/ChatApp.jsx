@@ -5,11 +5,29 @@ import { Remutable } from 'nexus-flux';
 import { parse } from 'url';
 import router from '../router';
 import { flux } from '../config';
+import Nexus from 'react-nexus';
 const { protocol, host, port } = flux;
 
-class ChatApp extends React.Component {
+export default class ChatApp extends Nexus.bind(class extends React.Component {
   static displayName = 'ChatApp';
+  static propTypes = {
+    status: Nexus.PropTypes.Immutable.Map,
+  };
 
+  getNexusBindings() {
+    return {
+      status: ['remote', '/status', {}],
+    };
+  }
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return <div>Hello ChatApp!</div>;
+  }
+}) {
   static getRoutes({ window, req, url }) {
     const href = url ? url :
       req ? req.url :
@@ -100,13 +118,5 @@ class ChatApp extends React.Component {
     };
   }
 
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return <div>Hello ChatApp!</div>;
-  }
+  static styles = {};
 }
-
-export default ChatApp;

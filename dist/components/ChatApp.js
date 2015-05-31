@@ -2,11 +2,11 @@
 
 var _inherits = require('babel-runtime/helpers/inherits')['default'];
 
-var _get = require('babel-runtime/helpers/get')['default'];
-
 var _createClass = require('babel-runtime/helpers/create-class')['default'];
 
 var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
+
+var _get = require('babel-runtime/helpers/get')['default'];
 
 var _Object$defineProperty = require('babel-runtime/core-js/object/define-property')['default'];
 
@@ -38,6 +38,10 @@ var _router2 = _interopRequireDefault(_router);
 
 var _config = require('../config');
 
+var _reactNexus = require('react-nexus');
+
+var _reactNexus2 = _interopRequireDefault(_reactNexus);
+
 var _ = require('lodash');
 var should = require('should');
 var Promise = (global || window).Promise = require('bluebird');
@@ -53,29 +57,18 @@ var protocol = _config.flux.protocol;
 var host = _config.flux.host;
 var port = _config.flux.port;
 
-var ChatApp = (function (_React$Component) {
-  function ChatApp(props) {
+var ChatApp = (function (_Nexus$bind) {
+  function ChatApp() {
     _classCallCheck(this, ChatApp);
 
-    _get(Object.getPrototypeOf(ChatApp.prototype), 'constructor', this).call(this, props);
+    if (_Nexus$bind != null) {
+      _Nexus$bind.apply(this, arguments);
+    }
   }
 
-  _inherits(ChatApp, _React$Component);
+  _inherits(ChatApp, _Nexus$bind);
 
-  _createClass(ChatApp, [{
-    key: 'render',
-    value: function render() {
-      return _react2['default'].createElement(
-        'div',
-        null,
-        'Hello ChatApp!'
-      );
-    }
-  }], [{
-    key: 'displayName',
-    value: 'ChatApp',
-    enumerable: true
-  }, {
+  _createClass(ChatApp, null, [{
     key: 'getRoutes',
     value: function getRoutes(_ref) {
       var window = _ref.window;
@@ -184,10 +177,50 @@ var ChatApp = (function (_React$Component) {
         local: ChatApp.createLocalFluxClient({ req: req, window: window }, clientID, lifespan),
         remote: ChatApp.createRemoteFluxClient({ req: req, window: window }, clientID, lifespan) };
     }
+  }, {
+    key: 'styles',
+    value: {},
+    enumerable: true
   }]);
 
   return ChatApp;
-})(_react2['default'].Component);
+})(_reactNexus2['default'].bind((function (_React$Component) {
+  var _class = function (props) {
+    _classCallCheck(this, _class);
+
+    _get(Object.getPrototypeOf(_class.prototype), 'constructor', this).call(this, props);
+  };
+
+  _inherits(_class, _React$Component);
+
+  _createClass(_class, [{
+    key: 'getNexusBindings',
+    value: function getNexusBindings() {
+      return {
+        status: ['remote', '/status', {}] };
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2['default'].createElement(
+        'div',
+        null,
+        'Hello ChatApp!'
+      );
+    }
+  }], [{
+    key: 'displayName',
+    value: 'ChatApp',
+    enumerable: true
+  }, {
+    key: 'propTypes',
+    value: {
+      status: _reactNexus2['default'].PropTypes.Immutable.Map },
+    enumerable: true
+  }]);
+
+  return _class;
+})(_react2['default'].Component)));
 
 exports['default'] = ChatApp;
 module.exports = exports['default'];
