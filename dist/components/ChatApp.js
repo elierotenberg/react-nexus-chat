@@ -6,8 +6,6 @@ var _createClass = require('babel-runtime/helpers/create-class')['default'];
 
 var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
 
-var _get = require('babel-runtime/helpers/get')['default'];
-
 var _Object$defineProperty = require('babel-runtime/core-js/object/define-property')['default'];
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -185,10 +183,12 @@ var ChatApp = (function (_Nexus$bind) {
 
   return ChatApp;
 })(_reactNexus2['default'].bind((function (_React$Component) {
-  var _class = function (props) {
+  var _class = function () {
     _classCallCheck(this, _class);
 
-    _get(Object.getPrototypeOf(_class.prototype), 'constructor', this).call(this, props);
+    if (_React$Component != null) {
+      _React$Component.apply(this, arguments);
+    }
   };
 
   _inherits(_class, _React$Component);

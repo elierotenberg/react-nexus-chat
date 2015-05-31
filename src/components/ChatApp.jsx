@@ -20,10 +20,6 @@ export default class ChatApp extends Nexus.bind(class extends React.Component {
     };
   }
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return <div>Hello ChatApp!</div>;
   }
