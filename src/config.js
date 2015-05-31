@@ -1,5 +1,5 @@
-import EnSystemMessage from './locales/en/SystemMessage';
-import FrSystemMessage from './locales/fr/SystemMessage';
+import en from './locales/en';
+import fr from './locales/fr';
 
 export default {
   MODULE_NAME: 'react-nexus-chat',
@@ -21,10 +21,10 @@ export default {
   },
 
   intl: {
-    en: EnSystemMessage,
-    'en-US': EnSystemMessage,
-    fr: FrSystemMessage,
-    'fr-FR': FrSystemMessage,
+    en,
+    'en-US': en,
+    fr,
+    'fr-FR': fr,
   },
 
   INT_MAX: 9007199254740992,

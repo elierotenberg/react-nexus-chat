@@ -51,7 +51,7 @@ function build() {
   .pipe(prepend(prelude))
   .pipe(babel({
     modules: 'common',
-    optional: ['runtime'],
+    optional: ['es7.classProperties', 'runtime'],
   }))
   .pipe(rename({
     extname: '.js',

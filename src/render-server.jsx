@@ -1,6 +1,6 @@
 import express from 'express';
 import favicon from 'serve-favicon';
-import Lifespan from 'lifespan';
+import { Lifespan } from 'nexus-flux';
 import Nexus from 'react-nexus';
 import React from 'react';
 import jsesc from 'jsesc';
@@ -8,7 +8,7 @@ import cors from 'cors';
 import { resolve } from 'url';
 
 import { analytics, MODULE_NAME, DEFAULT_CLIENT_ID, INT_MAX, render } from './config';
-const { port, host } = render
+const { protocol, port, host } = render;
 
 import ChatApp from './components/ChatApp';
 
@@ -36,7 +36,7 @@ function handleError(res) {
   };
 }
 
-function mountAppCode({ clientID, componentName, appRootID, data, props }) {
+function mountAppCode({ componentName, appRootID, data, props }) {
   return `
     window[JSON.parse('${jsesc(JSON.stringify(MODULE_NAME))}')][JSON.parse('${JSON.stringify(jsesc(componentName))}')]({
       container: document.getElementById(JSON.parse('${jsesc(JSON.stringify(appRootID))}')),
@@ -95,13 +95,13 @@ express()
           <title>${jsesc(title)}</title>
           <meta name="description" content="${jsesc(description)}">
           <meta name="viewport" content="width=device-width,initial-scale=1">
-          <link rel="icon" href="${faviconUrl}" type="image/x-icon">
+          <link rel="icon" href="${rFavicon}" type="image/x-icon">
           ${_.map(stylesheets, (href, id) => `<link id="${id}" rel="stylesheet" href="${href}">`).join('\n')}
         </head>
         <body>
           <div id="${jsesc(appRootID)}">${html}</div>
-          <script src="${jsesc(json2Url)}"></script>
-          <script src="${jsesc(clientUrl)}"></script>
+          <script src="${jsesc(rJSON2)}"></script>
+          <script src="${jsesc(rClient)}"></script>
           <script>
             ${mountAppCode({ clientID, componentName, appRootID, data, props })}
           </script>
@@ -131,7 +131,7 @@ express()
     const { originalUrl } = req;
     const iframe = '/iframe';
     const page = '/page';
-    const sourceUrl = nodeUrl.resolve(publicRoot, page + originalUrl.substring(iframe.length));
+    const sourceUrl = resolve(root, page + originalUrl.substring(iframe.length));
     res.status(200).send(`<iframe src="${jsesc(sourceUrl)}"></iframe>`);
   })
   .catch(handleError(res))
@@ -156,8 +156,8 @@ express()
       // const { title, description } = App.getRoutes({ req })[0];
       res.status(200).send(`
         <div id="${jsesc(appRootID)}">${html}</div>
-        <script src="${json2Url}"></script>
-        <script src="${clientUrl}"></script>
+        <script src="${rJSON2}"></script>
+        <script src="${rClient}"></script>
         <script>
           ${mountAppCode({ clientID, componentName, appRootID, data, props })}
           ${loadStylesheetsCode}
@@ -187,8 +187,8 @@ express()
       res.status(200).json({
         html: `
           <div id="${jsesc(appRootID)}">${html}</div>
-          <script src="${json2Url}"></script>
-          <script src="${clientUrl}"></script>
+          <script src="${rJSON2}"></script>
+          <script src="${rClient}"></script>
           <script>
             ${mountAppCode({ clientID, componentName, appRootID, data, props })}
           </script>
@@ -200,7 +200,3 @@ express()
   .catch(handleError(res))
 )
 .listen(port);
-
-if(__DEV__) {
-  console.log('render-server listening on port', port);
-}

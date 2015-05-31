@@ -1,9 +1,9 @@
-import Lifespan from 'lifespan';
+import { Lifespan } from 'nexus-flux';
 import Nexus from 'react-nexus';
 import uuid from 'node-uuid';
 const { React } = Nexus;
 
-import ChatApp from './components/ChatApp';
+import ChatAppC from './components/ChatApp';
 import { MODULE_NAME } from './config';
 
 if(__DEV__) {
@@ -20,8 +20,8 @@ window[MODULE_NAME] = {
     }
 
     const lifespan = new Lifespan();
-    const nexus = CommentsClientRoot.createNexus({ window }, clientID, lifespan);
+    const nexus = ChatAppC.createNexus({ window }, clientID, lifespan);
     window.addEventListener('close', lifespan.release);
-    Nexus.mountApp(<CommentsClientRoot {...props} />, nexus, data, container);
+    Nexus.mountApp(<ChatAppC {...props} />, nexus, data, container);
   },
 };
