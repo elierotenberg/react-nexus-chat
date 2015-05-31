@@ -21,7 +21,10 @@ export default class ChatApp extends Nexus.bind(class extends React.Component {
   }
 
   render() {
-    return <div>Hello ChatApp!</div>;
+    return <div>
+      <p>Topic: {this.props.status.get('topic')}</p>
+      <p>Date: {this.props.status.get('date')}</p>
+    </div>;
   }
 }) {
   static getRoutes({ window, req, url }) {

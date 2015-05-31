@@ -205,7 +205,18 @@ var ChatApp = (function (_Nexus$bind) {
       return _react2['default'].createElement(
         'div',
         null,
-        'Hello ChatApp!'
+        _react2['default'].createElement(
+          'p',
+          null,
+          'Topic: ',
+          this.props.status.get('topic')
+        ),
+        _react2['default'].createElement(
+          'p',
+          null,
+          'Date: ',
+          this.props.status.get('date')
+        )
       );
     }
   }], [{
