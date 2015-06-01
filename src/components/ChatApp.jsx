@@ -1,29 +1,45 @@
-import React from 'react';
+import sha256 from 'sha256';
 import LocalFlux from 'nexus-flux/adapters/Local';
+import Nexus from 'react-nexus';
+import React from 'react';
 import RemoteFluxClient from 'nexus-flux-socket.io/client';
-import { Remutable } from 'nexus-flux';
 import { parse } from 'url';
+import { Remutable } from 'nexus-flux';
+
+import NicknameModal from './NicknameModal';
 import router from '../router';
 import { flux } from '../config';
-import Nexus from 'react-nexus';
 const { protocol, host, port } = flux;
 
 export default class ChatApp extends Nexus.bind(class extends React.Component {
   static displayName = 'ChatApp';
   static propTypes = {
+    session: Nexus.PropTypes.Immutable.Map,
     status: Nexus.PropTypes.Immutable.Map,
+    users: Nexus.PropTypes.Immutable.Map,
   };
 
   getNexusBindings() {
     return {
+      session: ['local', '/session', {}],
       status: ['remote', '/status', {}],
+      users: ['remote', '/users', {}],
     };
   }
 
+  getUser() {
+    const defaultUser = {};
+    const clientID = this.props.session.get('clientID');
+    if(!clientID) {
+      return defaultUser;
+    }
+    return this.props.users.get(sha256(clientID)) || defaultUser;
+  }
+
   render() {
-    return <div>
-      <p>Topic: {this.props.status.get('topic')}</p>
-      <p>Date: {this.props.status.get('date')}</p>
+    const { nickname } = this.getUser();
+    return <div className='ChatApp'>
+      { nickname ? `Hello ${nickname}` : <NicknameModal /> }
     </div>;
   }
 }) {
@@ -59,14 +75,14 @@ export default class ChatApp extends Nexus.bind(class extends React.Component {
         scrollX: __NODE__ ? 0 : window.scrollX,
         scrollY: __NODE__ ? 0 : window.scrollY,
       }),
-      '/user': new Remutable({
+      '/session': new Remutable({
         clientID,
-        nickname: null,
       }),
     };
 
     const server = new LocalFlux.Server(stores);
     const client = new LocalFlux.Client(server);
+
     lifespan.onRelease(() => {
       client.lifespan.release();
       server.lifespan.release();
@@ -91,14 +107,33 @@ export default class ChatApp extends Nexus.bind(class extends React.Component {
           .commit()
         );
       });
+
       window.addEventListener('popstate', () => {
         server.dispatchUpdate('/window',
           stores['/window']
             .set('routes', ChatApp.getRoutes({ window }))
             .commit()
         );
+
         ChatApp.updateMetaDOMNodes({ window });
       });
+
+      server
+        .dispatchUpdate('/window',
+          stores['/window']
+            .set('routes', ChatApp.getRoutes({ window }))
+            .set('locale', window.navigator.userLanguage || window.navigator.language || 'en')
+            .set('scrollX', window.scrollX)
+            .set('scrollY', window.scrollY)
+          .commit()
+        )
+        .dispatchUpdate('/session',
+          stores['/session']
+            .set('clientID', clientID)
+          .commit()
+        )
+      ;
+
     }
 
     return client;
@@ -107,6 +142,11 @@ export default class ChatApp extends Nexus.bind(class extends React.Component {
   static createRemoteFluxClient({ req, window }, clientID, lifespan) {
     const client = new RemoteFluxClient(`${protocol}://${host}:${port}`);
     lifespan.onRelease(() => client.lifespan.release());
+
+    if(__BROWSER__) {
+      client.forceResync();
+    }
+
     return client;
   }
 

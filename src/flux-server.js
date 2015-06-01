@@ -1,7 +1,7 @@
 import SocketIOServer from 'nexus-flux-socket.io/server';
 import { Remutable } from 'nexus-flux';
 import { flux } from './config';
-import hash from 'sha256';
+import sha256 from 'sha256';
 import morgan from 'morgan';
 const { port } = flux;
 
@@ -42,19 +42,19 @@ class ChatServer extends SocketIOServer {
     });
   }
 
-  dispatchAction({ path, params }) {
+  dispatchAction(path, params) {
     if(path === '/topic') {
       const { topic } = params;
       return this.dispatchUpdate('/status', this.stores['/status'].set('topic', topic).commit());
     }
     if(path === '/nickname') {
-      const { clientId, nickname } = params;
-      const h = hash(clientId);
+      const { clientID, nickname } = params;
+      const h = sha256(clientID);
       return this.dispatchUpdate('/users', this.stores['/users'].set(h, { h, nickname, lastSeen: Date.now() }).commit());
     }
     if(path === '/ping') {
-      const { clientId } = params;
-      const h = hash(clientId);
+      const { clientID } = params;
+      const h = sha256(clientID);
       const prev = this.stores['/users'].head.get(h);
       if(prev === void 0) {
         return null;

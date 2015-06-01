@@ -103,7 +103,7 @@ express()
           <script src="${jsesc(rJSON2)}"></script>
           <script src="${jsesc(rClient)}"></script>
           <script>
-            ${mountAppCode({ clientID, componentName, appRootID, data, props })}
+            ${mountAppCode({ componentName, appRootID, data, props })}
           </script>
           <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
@@ -159,7 +159,7 @@ express()
         <script src="${rJSON2}"></script>
         <script src="${rClient}"></script>
         <script>
-          ${mountAppCode({ clientID, componentName, appRootID, data, props })}
+          ${mountAppCode({ componentName, appRootID, data, props })}
           ${loadStylesheetsCode}
         </script>
       `);
@@ -190,7 +190,7 @@ express()
           <script src="${rJSON2}"></script>
           <script src="${rClient}"></script>
           <script>
-            ${mountAppCode({ clientID, componentName, appRootID, data, props })}
+            ${mountAppCode({ componentName, appRootID, data, props })}
           </script>
         `,
         css: _.values(stylesheets),
