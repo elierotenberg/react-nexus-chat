@@ -22,6 +22,10 @@ var _reactNexus = require('react-nexus');
 
 var _reactNexus2 = _interopRequireDefault(_reactNexus);
 
+var _pureRenderDecorator = require('pure-render-decorator');
+
+var _pureRenderDecorator2 = _interopRequireDefault(_pureRenderDecorator);
+
 var _MessageInput = require('./MessageInput');
 
 var _MessageInput2 = _interopRequireDefault(_MessageInput);
@@ -48,7 +52,7 @@ if (__DEV__) {
 
 var Room = (function (_React$Component) {
   function Room() {
-    _classCallCheck(this, Room);
+    _classCallCheck(this, _Room);
 
     if (_React$Component != null) {
       _React$Component.apply(this, arguments);
@@ -57,7 +61,9 @@ var Room = (function (_React$Component) {
 
   _inherits(Room, _React$Component);
 
-  _createClass(Room, [{
+  var _Room = Room;
+
+  _createClass(_Room, [{
     key: 'render',
     value: function render() {
       var status = this.props.status;
@@ -111,6 +117,7 @@ var Room = (function (_React$Component) {
     enumerable: true
   }]);
 
+  Room = (0, _pureRenderDecorator2['default'])(Room) || Room;
   return Room;
 })(_react2['default'].Component);
 

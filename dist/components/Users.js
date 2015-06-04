@@ -22,6 +22,10 @@ var _reactNexus = require('react-nexus');
 
 var _reactNexus2 = _interopRequireDefault(_reactNexus);
 
+var _pureRenderDecorator = require('pure-render-decorator');
+
+var _pureRenderDecorator2 = _interopRequireDefault(_pureRenderDecorator);
+
 var _ = require('lodash');
 var should = require('should');
 var Promise = (global || window).Promise = require('bluebird');
@@ -36,7 +40,7 @@ if (__DEV__) {
 
 var Users = (function (_React$Component) {
   function Users() {
-    _classCallCheck(this, Users);
+    _classCallCheck(this, _Users);
 
     if (_React$Component != null) {
       _React$Component.apply(this, arguments);
@@ -45,7 +49,9 @@ var Users = (function (_React$Component) {
 
   _inherits(Users, _React$Component);
 
-  _createClass(Users, [{
+  var _Users = Users;
+
+  _createClass(_Users, [{
     key: 'render',
     value: function render() {
       var users = this.props.users;
@@ -90,6 +96,7 @@ var Users = (function (_React$Component) {
     enumerable: true
   }]);
 
+  Users = (0, _pureRenderDecorator2['default'])(Users) || Users;
   return Users;
 })(_react2['default'].Component);
 
