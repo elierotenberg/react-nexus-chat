@@ -6,56 +6,66 @@ import RemoteFluxClient from 'nexus-flux-socket.io/client';
 import { parse } from 'url';
 import { Remutable } from 'nexus-flux';
 
+import PingTicker from './PingTicker';
 import NicknameModal from './NicknameModal';
+import Room from './Room';
 import router from '../router';
 import { flux } from '../config';
 const { protocol, host, port } = flux;
 
-export default class ChatApp extends Nexus.bind(class extends React.Component {
-  static displayName = 'ChatApp';
+@Nexus.inject(() => ({
+  messages: ['remote', '/messages', {}],
+  session: ['local', '/session', {}],
+  status: ['remote', '/status', {}],
+  users: ['remote', '/users', {}],
+}))
+class App extends React.Component {
+  static displayName = 'App';
+
   static propTypes = {
+    messages: Nexus.PropTypes.Immutable.Map,
     session: Nexus.PropTypes.Immutable.Map,
     status: Nexus.PropTypes.Immutable.Map,
     users: Nexus.PropTypes.Immutable.Map,
   };
 
-  getNexusBindings() {
-    return {
-      session: ['local', '/session', {}],
-      status: ['remote', '/status', {}],
-      users: ['remote', '/users', {}],
-    };
-  }
+  static styles = {};
 
   getUser() {
     const defaultUser = {};
-    const clientID = this.props.session.get('clientID');
+    const { session, users } = this.props;
+    const clientID = session.get('clientID');
     if(!clientID) {
       return defaultUser;
     }
-    return this.props.users.get(sha256(clientID)) || defaultUser;
+    return users.get(sha256(clientID)) || defaultUser;
   }
 
   render() {
     const { nickname } = this.getUser();
-    return <div className='ChatApp'>
-      { nickname ? `Hello ${nickname}` : <NicknameModal /> }
+    const { messages, status, users } = this.props;
+    const clientID = this.props.session.get('clientID');
+    return <div className='App'>
+      { nickname ? <PingTicker clientID={clientID} /> : <NicknameModal clientID={clientID} /> }
+      <Room clientID={clientID} messages={messages} status={status} users={users} />
     </div>;
   }
-}) {
-  static getRoutes({ window, req, url }) {
+}
+
+Object.assign(App, {
+  getRoutes({ window, req, url }) {
     const href = url ? url :
       req ? req.url :
       window ? window.location.href : '';
     const { path, hash } = parse(href);
     return router.route(`${path}${hash ? hash : ''}`);
-  }
+  },
 
-  static updateMetaDOMNodes({ window }) {
+  updateMetaDOMNodes({ window }) {
     if(__DEV__) {
       __BROWSER__.should.be.true;
     }
-    const { title, description } = ChatApp.getRoutes({ window })[0];
+    const { title, description } = App.getRoutes({ window })[0];
     const titleDOMNode = window.document.querySelector('title');
     if(titleDOMNode !== null) {
       titleDOMNode.textContent = title;
@@ -64,12 +74,12 @@ export default class ChatApp extends Nexus.bind(class extends React.Component {
     if(descriptionDOMNode !== null) {
       descriptionDOMNode.setAttribute('content', description);
     }
-  }
+  },
 
-  static createLocalFluxClient({ req, window }, clientID, lifespan) {
+  createLocalFluxClient({ req, window }, clientID, lifespan) {
     const stores = {
       '/window': new Remutable({
-        routes: ChatApp.getRoutes({ req, window }),
+        routes: App.getRoutes({ req, window }),
         locale: __NODE__ ? req.acceptsLanguages(['en', 'fr']) || 'en' :
           window.navigator.userLanguage || window.navigator.language || 'en',
         scrollX: __NODE__ ? 0 : window.scrollX,
@@ -111,17 +121,17 @@ export default class ChatApp extends Nexus.bind(class extends React.Component {
       window.addEventListener('popstate', () => {
         server.dispatchUpdate('/window',
           stores['/window']
-            .set('routes', ChatApp.getRoutes({ window }))
+            .set('routes', App.getRoutes({ window }))
             .commit()
         );
 
-        ChatApp.updateMetaDOMNodes({ window });
+        App.updateMetaDOMNodes({ window });
       });
 
       server
         .dispatchUpdate('/window',
           stores['/window']
-            .set('routes', ChatApp.getRoutes({ window }))
+            .set('routes', App.getRoutes({ window }))
             .set('locale', window.navigator.userLanguage || window.navigator.language || 'en')
             .set('scrollX', window.scrollX)
             .set('scrollY', window.scrollY)
@@ -137,9 +147,9 @@ export default class ChatApp extends Nexus.bind(class extends React.Component {
     }
 
     return client;
-  }
+  },
 
-  static createRemoteFluxClient({ req, window }, clientID, lifespan) {
+  createRemoteFluxClient({ req, window }, clientID, lifespan) {
     const client = new RemoteFluxClient(`${protocol}://${host}:${port}`);
     lifespan.onRelease(() => client.lifespan.release());
 
@@ -148,14 +158,14 @@ export default class ChatApp extends Nexus.bind(class extends React.Component {
     }
 
     return client;
-  }
+  },
 
-  static createNexus({ req, window }, clientID, lifespan) {
+  createNexus({ req, window }, clientID, lifespan) {
     return {
-      local: ChatApp.createLocalFluxClient({ req, window }, clientID, lifespan),
-      remote: ChatApp.createRemoteFluxClient({ req, window }, clientID, lifespan),
+      local: App.createLocalFluxClient({ req, window }, clientID, lifespan),
+      remote: App.createRemoteFluxClient({ req, window }, clientID, lifespan),
     };
-  }
+  },
+});
 
-  static styles = {};
-}
+export default App;

@@ -18,6 +18,8 @@ class ChatServer extends SocketIOServer {
     const logger = morgan('combined');
     super(port, void 0, void 0, void 0, [logger]);
 
+    this._nextMessageId = 0;
+
     this.stores = {
       '/status': new Remutable({
         date: Date.now(),
@@ -26,6 +28,13 @@ class ChatServer extends SocketIOServer {
       '/messages': new Remutable({}),
       '/users': new Remutable({}),
     };
+
+    this.usersTimers = {};
+
+    this.postMessage({
+      nickname: 'System',
+      text: 'The server has started!',
+    });
 
     this.on('action', ({ path, params }) => this.dispatchAction({ path, params }));
 
@@ -42,44 +51,105 @@ class ChatServer extends SocketIOServer {
     });
   }
 
+  createMessageId() {
+    const id = this._nextMessageId;
+    this._nextMessageId = this._nextMessageId + 1;
+    return '' + id;
+  }
+
+  postMessage({ nickname, text }) {
+    const id = this.createMessageId();
+    const date = Date.now();
+    this.dispatchUpdate(
+      '/messages',
+      this.stores['/messages'].set(id, { id, nickname, text, date }).commit()
+    );
+  }
+
   dispatchAction(path, params) {
-    if(path === '/topic') {
+    if(path === '/setTopic') {
       const { topic } = params;
-      return this.dispatchUpdate('/status', this.stores['/status'].set('topic', topic).commit());
+      this.dispatchUpdate(
+        '/status',
+        this.stores['/status'].set('topic', topic).commit()
+      );
+      return;
     }
-    if(path === '/nickname') {
+    if(path === '/setNickname') {
       const { clientID, nickname } = params;
       const h = sha256(clientID);
-      return this.dispatchUpdate('/users', this.stores['/users'].set(h, { h, nickname, lastSeen: Date.now() }).commit());
+      if(this.usersTimers[h] === void 0) {
+        this.postMessage({
+          nickname: 'System',
+          text: `${nickname} has joined.`,
+        });
+      }
+      else {
+        const oldNickname = this.stores['/users'].get(h).nickname;
+        this.postMessage({
+          nickname: 'System',
+          text: `${oldNickname} is now ${nickname}.`,
+        });
+      }
+      this.usersTimers[h] = Date.now();
+      this.dispatchUpdate(
+        '/users',
+        this.stores['/users'].set(h, { h, nickname }).commit()
+      );
+      return;
     }
     if(path === '/ping') {
       const { clientID } = params;
       const h = sha256(clientID);
-      const prev = this.stores['/users'].head.get(h);
-      if(prev === void 0) {
-        return null;
+      if(this.usersTimers[h] === void 0) {
+        return;
       }
-      const next = Object.assign({}, prev, { lastSeen: Date.now() });
-      return this.dispatchUpdate('/users', this.stores['/users'].set(h, next).commit());
+      this.usersTimers[h] = Date.now();
+      return;
+    }
+    if(path === '/postMessage') {
+      const { clientID, text } = params;
+      const h = sha256(clientID);
+      const user = this.stores['/users'].head.get(h);
+      if(user === void 0) {
+        return;
+      }
+      const date = Date.now();
+      this.usersTimers[h] = date;
+      const { nickname } = user;
+      this.postMessage({ nickname, text });
+      return;
     }
   }
 
   tickClock() {
-    return this.dispatchUpdate('/status', this.stores['/status'].set('date', Date.now()).commit());
+    this.dispatchUpdate(
+      '/status',
+      this.stores['/status'].set('date', Date.now()).commit()
+    );
   }
 
   tickUsers() {
     const now = Date.now();
-    _.each(this.stores['/users'].head.entries(), (h, user) => {
-      const { lastSeen } = user;
-      if(now - lastSeen > USER_TIMEOUT) {
-        this.stores['/users'].delete(h);
+    const users = this.stores['/users'];
+    _.each(this.usersTimers, (lastPing, h) => {
+      if(now - lastPing > USER_TIMEOUT) {
+        const { nickname } = users.get(h);
+        this.postMessage({
+          nickname: 'System',
+          text: `${nickname} has left.`,
+        });
+        users.delete(h);
+        delete this.usersTimers[h];
       }
     });
-    if(!this.stores['/users'].dirty) {
-      return null;
+    if(!users.dirty) {
+      return;
     }
-    return this.dispatchUpdate('/users', this.stores['/users'].commit());
+    this.dispatchUpdate(
+      '/users',
+      users.commit()
+    );
   }
 }
 

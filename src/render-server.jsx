@@ -10,10 +10,10 @@ import { resolve } from 'url';
 import { analytics, MODULE_NAME, DEFAULT_CLIENT_ID, INT_MAX, render } from './config';
 const { protocol, port, host } = render;
 
-import ChatApp from './components/ChatApp';
+import App from './components/App';
 
 const components = {
-  ChatApp,
+  App,
 };
 
 const root = `${protocol}://${host}:${port}`;
@@ -80,12 +80,12 @@ express()
     if(!_.has(components, componentName)) {
       return res.status(404).end();
     }
-    const App = components[componentName];
-    const nexus = App.createNexus({ req }, clientID, lifespan);
-    return Nexus.prerenderApp(<App {...props} />, nexus)
+    const Component = components[componentName];
+    const nexus = Component.createNexus({ req }, clientID, lifespan);
+    return Nexus.prerenderApp(<Component {...props} />, nexus)
     .then(([html, data]) => {
       lifespan.release();
-      const { title, description } = App.getRoutes({ req })[0];
+      const { title, description } = Component.getRoutes({ req })[0];
       res.status(200).send(
         `<!doctype html>
         <html>
@@ -148,12 +148,11 @@ express()
     if(!_.has(components, componentName)) {
       return res.status(404).end();
     }
-    const App = components[componentName];
-    const nexus = App.createNexus({ req }, clientID, lifespan);
-    return Nexus.prerenderApp(<App {...props} />, nexus)
+    const Component = components[componentName];
+    const nexus = Component.createNexus({ req }, clientID, lifespan);
+    return Nexus.prerenderApp(<Component {...props} />, nexus)
     .then(([html, data]) => {
       lifespan.release();
-      // const { title, description } = App.getRoutes({ req })[0];
       res.status(200).send(`
         <div id="${jsesc(appRootID)}">${html}</div>
         <script src="${rJSON2}"></script>
@@ -179,9 +178,9 @@ express()
     if(!_.has(components, componentName)) {
       return res.status(404).end();
     }
-    const App = components[componentName];
-    const nexus = App.createNexus({ req }, clientID, lifespan);
-    return Nexus.prerenderApp(<App {...props} />, nexus)
+    const Component = components[componentName];
+    const nexus = Component.createNexus({ req }, clientID, lifespan);
+    return Nexus.prerenderApp(<Component {...props} />, nexus)
     .then(([html, data]) => {
       lifespan.release();
       res.status(200).json({
