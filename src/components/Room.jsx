@@ -1,10 +1,12 @@
 import React from 'react';
 import Nexus from 'react-nexus';
+import pure from 'pure-render-decorator';
 
 import MessageInput from './MessageInput';
 import Messages from './Messages';
 import Users from './Users';
 
+@pure
 class Room extends React.Component {
   static displayName = 'Room';
   static propTypes = {

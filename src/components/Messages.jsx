@@ -1,6 +1,8 @@
 import React from 'react';
 import Nexus from 'react-nexus';
+import pure from 'pure-render-decorator';
 
+@pure
 class Messages extends React.Component {
   static displayName = 'Messages';
 

@@ -22,6 +22,10 @@ var _reactNexus = require('react-nexus');
 
 var _reactNexus2 = _interopRequireDefault(_reactNexus);
 
+var _pureRenderDecorator = require('pure-render-decorator');
+
+var _pureRenderDecorator2 = _interopRequireDefault(_pureRenderDecorator);
+
 var _ = require('lodash');
 var should = require('should');
 var Promise = (global || window).Promise = require('bluebird');
@@ -36,7 +40,7 @@ if (__DEV__) {
 
 var Messages = (function (_React$Component) {
   function Messages() {
-    _classCallCheck(this, Messages);
+    _classCallCheck(this, _Messages);
 
     if (_React$Component != null) {
       _React$Component.apply(this, arguments);
@@ -45,7 +49,9 @@ var Messages = (function (_React$Component) {
 
   _inherits(Messages, _React$Component);
 
-  _createClass(Messages, [{
+  var _Messages = Messages;
+
+  _createClass(_Messages, [{
     key: 'render',
     value: function render() {
       var messages = this.props.messages;
@@ -96,6 +102,7 @@ var Messages = (function (_React$Component) {
     enumerable: true
   }]);
 
+  Messages = (0, _pureRenderDecorator2['default'])(Messages) || Messages;
   return Messages;
 })(_react2['default'].Component);
 

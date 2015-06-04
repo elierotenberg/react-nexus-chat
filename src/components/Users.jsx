@@ -1,6 +1,8 @@
 import React from 'react';
 import Nexus from 'react-nexus';
+import pure from 'pure-render-decorator';
 
+@pure
 class Users extends React.Component {
   static displayName = 'Users';
 
