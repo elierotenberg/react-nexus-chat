@@ -34,12 +34,16 @@ exports['default'] = {
     UA: 'UA-XXXXX-X' },
 
   render: {
-    port: 80,
+    port: {
+      'public': 80,
+      'private': 80 },
     host: 'localhost',
     protocol: 'http' },
 
   flux: {
-    port: 8080,
+    port: {
+      'public': 8080,
+      'private': 8080 },
     host: 'localhost',
     protocol: 'http' },
 

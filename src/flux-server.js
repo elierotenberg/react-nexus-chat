@@ -16,7 +16,7 @@ class NotFound extends Error {
 class ChatServer extends SocketIOServer {
   constructor() {
     const logger = morgan('combined');
-    super(port, void 0, void 0, void 0, [logger]);
+    super(port.private, void 0, void 0, void 0, [logger]);
 
     this._nextMessageId = 0;
 

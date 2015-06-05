@@ -16,7 +16,7 @@ const components = {
   App,
 };
 
-const root = `${protocol}://${host}:${port}`;
+const root = `${protocol}://${host}:${port.public}`;
 const r = (t) => resolve(root, t);
 const rFavicon = r('/favicon.ico');
 const rClient = r('/c.js');
@@ -198,4 +198,4 @@ express()
   })
   .catch(handleError(res))
 )
-.listen(port);
+.listen(port.private);

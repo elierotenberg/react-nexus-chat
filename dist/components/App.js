@@ -240,7 +240,7 @@ _Object$assign(App, {
     var req = _ref5.req;
     var window = _ref5.window;
 
-    var client = new _nexusFluxSocketIoClient2['default']('' + protocol + '://' + host + ':' + port);
+    var client = new _nexusFluxSocketIoClient2['default']('' + protocol + '://' + host + ':' + port['public']);
     lifespan.onRelease(function () {
       return client.lifespan.release();
     });

@@ -56,7 +56,7 @@ var host = _config.render.host;
 var components = {
   App: _componentsApp2['default'] };
 
-var root = '' + protocol + '://' + host + ':' + port;
+var root = '' + protocol + '://' + host + ':' + port['public'];
 var r = function r(t) {
   return (0, _url.resolve)(root, t);
 };
@@ -197,4 +197,4 @@ var loadStylesheetsCode = _.map(stylesheets, function (url, id) {
         css: _.values(stylesheets) });
     });
   })['catch'](handleError(res));
-}).listen(port);
+}).listen(port['private']);

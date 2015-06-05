@@ -72,7 +72,7 @@ var ChatServer = (function (_SocketIOServer) {
     _classCallCheck(this, ChatServer);
 
     var logger = (0, _morgan2['default'])('combined');
-    _get(Object.getPrototypeOf(ChatServer.prototype), 'constructor', this).call(this, port, void 0, void 0, void 0, [logger]);
+    _get(Object.getPrototypeOf(ChatServer.prototype), 'constructor', this).call(this, port['private'], void 0, void 0, void 0, [logger]);
 
     this._nextMessageId = 0;
 

@@ -150,7 +150,7 @@ Object.assign(App, {
   },
 
   createRemoteFluxClient({ req, window }, clientID, lifespan) {
-    const client = new RemoteFluxClient(`${protocol}://${host}:${port}`);
+    const client = new RemoteFluxClient(`${protocol}://${host}:${port.public}`);
     lifespan.onRelease(() => client.lifespan.release());
 
     if(__BROWSER__) {
