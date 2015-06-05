@@ -15,6 +15,10 @@ function getTimeString(date) {
     height: '600px',
     overflowY: 'scroll',
   },
+
+  '.Messages-content': {
+    maxWidth: '90%',
+  },
 })
 @pure
 class Messages extends React.Component {
@@ -38,21 +42,14 @@ class Messages extends React.Component {
 
   render() {
     const { messages } = this.props;
-    return <div className='Messages ui feed' ref='messages'>
+    return <div className='Messages ui list' ref='messages'>
       {messages
         .sort((a, b) => a.date - b.date)
-        .map(({ id, h, nickname, text, date }) => <div key={id} className='event'>
-          <div className='label'>
-            <Identicon id={h} type='retro' />
-          </div>
-          <div className='content'>
-            <div className='summary'>
-              <a className='user'>{nickname}</a>
-              <div className='date'>{getTimeString(date)}</div>
-            </div>
-            <div className='extra text'>
-              {text}
-            </div>
+        .map(({ id, h, nickname, text, date }) => <div key={id} className='item'>
+          <Identicon id={h} type='retro' className='ui top aligned mini avatar image' />
+          <div className='Messages-content content'>
+            <div className='header'>{nickname} <span className='Messages-date'>{getTimeString(date)}</span></div>
+            {text}
           </div>
         </div>)
         .toArray()

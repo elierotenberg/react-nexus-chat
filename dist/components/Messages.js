@@ -88,7 +88,7 @@ var Messages = (function (_React$Component) {
 
       return _react2['default'].createElement(
         'div',
-        { className: 'Messages ui feed', ref: 'messages' },
+        { className: 'Messages ui list', ref: 'messages' },
         messages.sort(function (a, b) {
           return a.date - b.date;
         }).map(function (_ref) {
@@ -99,34 +99,23 @@ var Messages = (function (_React$Component) {
           var date = _ref.date;
           return _react2['default'].createElement(
             'div',
-            { key: id, className: 'event' },
+            { key: id, className: 'item' },
+            _react2['default'].createElement(_reactIdenticon2['default'], { id: h, type: 'retro', className: 'ui top aligned mini avatar image' }),
             _react2['default'].createElement(
               'div',
-              { className: 'label' },
-              _react2['default'].createElement(_reactIdenticon2['default'], { id: h, type: 'retro' })
-            ),
-            _react2['default'].createElement(
-              'div',
-              { className: 'content' },
+              { className: 'Messages-content content' },
               _react2['default'].createElement(
                 'div',
-                { className: 'summary' },
+                { className: 'header' },
+                nickname,
+                ' ',
                 _react2['default'].createElement(
-                  'a',
-                  { className: 'user' },
-                  nickname
-                ),
-                _react2['default'].createElement(
-                  'div',
-                  { className: 'date' },
+                  'span',
+                  { className: 'Messages-date' },
                   getTimeString(date)
                 )
               ),
-              _react2['default'].createElement(
-                'div',
-                { className: 'extra text' },
-                text
-              )
+              text
             )
           );
         }).toArray()
@@ -150,7 +139,10 @@ var Messages = (function (_React$Component) {
   Messages = (0, _reactStaticsStyles.styles)({
     '.Messages': {
       height: '600px',
-      overflowY: 'scroll' } })(Messages) || Messages;
+      overflowY: 'scroll' },
+
+    '.Messages-content': {
+      maxWidth: '90%' } })(Messages) || Messages;
   return Messages;
 })(_react2['default'].Component);
 
