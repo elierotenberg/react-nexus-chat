@@ -26,6 +26,12 @@ var _pureRenderDecorator = require('pure-render-decorator');
 
 var _pureRenderDecorator2 = _interopRequireDefault(_pureRenderDecorator);
 
+var _reactIdenticon = require('react-identicon');
+
+var _reactIdenticon2 = _interopRequireDefault(_reactIdenticon);
+
+var _reactStaticsStyles = require('react-statics-styles');
+
 var _ = require('lodash');
 var should = require('should');
 var Promise = (global || window).Promise = require('bluebird');
@@ -61,24 +67,23 @@ var Users = (function (_React$Component) {
         { className: 'Users' },
         _react2['default'].createElement(
           'div',
-          { className: 'Users-header' },
-          users.count(),
-          ' users'
-        ),
-        _react2['default'].createElement(
-          'ul',
-          { className: 'Users-body' },
+          { className: 'ui list' },
           users.sort(function (a, b) {
             return a.nickname.localeCompare(b.nickname);
           }).map(function (_ref) {
             var h = _ref.h;
             var nickname = _ref.nickname;
             return _react2['default'].createElement(
-              'li',
-              { key: h },
-              nickname
+              'div',
+              { key: h, className: 'item' },
+              _react2['default'].createElement(_reactIdenticon2['default'], { id: h, type: 'retro', className: 'ui avatar image' }),
+              _react2['default'].createElement(
+                'div',
+                { className: 'content' },
+                nickname
+              )
             );
-          })
+          }).toArray()
         )
       );
     }
@@ -97,6 +102,10 @@ var Users = (function (_React$Component) {
   }]);
 
   Users = (0, _pureRenderDecorator2['default'])(Users) || Users;
+  Users = (0, _reactStaticsStyles.styles)({
+    '.Users': {
+      height: '600px',
+      overflowY: 'scroll' } })(Users) || Users;
   return Users;
 })(_react2['default'].Component);
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import Nexus from 'react-nexus';
 import sha256 from 'sha256';
+import requestAnimationFrame from 'raf';
 
 @Nexus.inject(() => ({}))
 class MessageInput extends React.Component {
@@ -18,13 +19,31 @@ class MessageInput extends React.Component {
     users: Nexus.PropTypes.Immutable.Map,
   };
 
-  componentDidUpdate() {
-    this.refs.messageInput.getDOMNode().focus();
+  componentWillReceiveProps() {
+    if(!this.hasNickname()) {
+      if(this._raf !== null) {
+        requestAnimationFrame.cancel(this._raf);
+      }
+      this._raf = requestAnimationFrame(() => {
+        this._raf = null;
+        if(this.hasNickname()) {
+          this.refs.messageInput.getDOMNode().focus();
+        }
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    if(this._raf !== null) {
+      requestAnimationFrame.cancel(this._raf);
+      this._raf = null;
+    }
   }
 
   constructor(props) {
     super(props);
     this.state = { message: '' };
+    this._raf = null;
   }
 
   updateMessage(e) {
@@ -34,6 +53,9 @@ class MessageInput extends React.Component {
 
   postMessage(e) {
     e.preventDefault();
+    if(!this.hasNickname()) {
+      return;
+    }
     const { message } = this.state;
     const { clientID, nexus } = this.props;
     if(message.startsWith('/nick')) {
@@ -55,13 +77,17 @@ class MessageInput extends React.Component {
 
   render() {
     const { message } = this.state;
+    const disabled = !this.hasNickname();
+    const onChange = (e) => this.updateMessage(e);
+    const onSubmit = (e) => this.postMessage(e);
     return <div className='MessageInput'>
-      {this.hasNickname() ?
-        <form onSubmit={(e) => this.postMessage(e)}>
-          <input ref='messageInput' type='text' onChange={(e) => this.updateMessage(e)} value={message} />
-        </form> :
-        'You must have a nickname to post messages.'
-      }
+      <form onSubmit={onSubmit}>
+        <div className='ui fluid left icon input'>
+          <input ref='messageInput' type='text' onChange={onChange} value={message} disabled={disabled}
+            placeholder='Type message...' />
+          <i className='comment icon' />
+        </div>
+      </form>
     </div>;
   }
 }

@@ -129,12 +129,14 @@ var ChatServer = (function (_SocketIOServer) {
   }, {
     key: 'postMessage',
     value: function postMessage(_ref3) {
+      var _ref3$h = _ref3.h;
+      var h = _ref3$h === undefined ? '' : _ref3$h;
       var nickname = _ref3.nickname;
       var text = _ref3.text;
 
       var id = this.createMessageId();
       var date = Date.now();
-      this.dispatchUpdate('/messages', this.stores['/messages'].set(id, { id: id, nickname: nickname, text: text, date: date }).commit());
+      this.dispatchUpdate('/messages', this.stores['/messages'].set(id, { id: id, h: h, nickname: nickname, text: text, date: date }).commit());
     }
   }, {
     key: 'dispatchAction',
@@ -187,7 +189,7 @@ var ChatServer = (function (_SocketIOServer) {
         this.usersTimers[h] = date;
         var nickname = user.nickname;
 
-        this.postMessage({ nickname: nickname, text: text });
+        this.postMessage({ h: h, nickname: nickname, text: text });
         return;
       }
     }

@@ -57,12 +57,12 @@ class ChatServer extends SocketIOServer {
     return '' + id;
   }
 
-  postMessage({ nickname, text }) {
+  postMessage({ h = '', nickname, text }) {
     const id = this.createMessageId();
     const date = Date.now();
     this.dispatchUpdate(
       '/messages',
-      this.stores['/messages'].set(id, { id, nickname, text, date }).commit()
+      this.stores['/messages'].set(id, { id, h, nickname, text, date }).commit()
     );
   }
 
@@ -117,7 +117,7 @@ class ChatServer extends SocketIOServer {
       const date = Date.now();
       this.usersTimers[h] = date;
       const { nickname } = user;
-      this.postMessage({ nickname, text });
+      this.postMessage({ h, nickname, text });
       return;
     }
   }

@@ -28,6 +28,10 @@ var _sha256 = require('sha256');
 
 var _sha2562 = _interopRequireDefault(_sha256);
 
+var _raf = require('raf');
+
+var _raf2 = _interopRequireDefault(_raf);
+
 var _ = require('lodash');
 var should = require('should');
 var Promise = (global || window).Promise = require('bluebird');
@@ -46,6 +50,7 @@ var MessageInput = (function (_React$Component) {
 
     _get(Object.getPrototypeOf(_MessageInput.prototype), 'constructor', this).call(this, props);
     this.state = { message: '' };
+    this._raf = null;
   }
 
   _inherits(MessageInput, _React$Component);
@@ -53,9 +58,29 @@ var MessageInput = (function (_React$Component) {
   var _MessageInput = MessageInput;
 
   _createClass(_MessageInput, [{
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate() {
-      this.refs.messageInput.getDOMNode().focus();
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps() {
+      var _this = this;
+
+      if (!this.hasNickname()) {
+        if (this._raf !== null) {
+          _raf2['default'].cancel(this._raf);
+        }
+        this._raf = (0, _raf2['default'])(function () {
+          _this._raf = null;
+          if (_this.hasNickname()) {
+            _this.refs.messageInput.getDOMNode().focus();
+          }
+        });
+      }
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      if (this._raf !== null) {
+        _raf2['default'].cancel(this._raf);
+        this._raf = null;
+      }
     }
   }, {
     key: 'updateMessage',
@@ -67,6 +92,9 @@ var MessageInput = (function (_React$Component) {
     key: 'postMessage',
     value: function postMessage(e) {
       e.preventDefault();
+      if (!this.hasNickname()) {
+        return;
+      }
       var message = this.state.message;
       var _props = this.props;
       var clientID = _props.clientID;
@@ -93,22 +121,31 @@ var MessageInput = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
       var message = this.state.message;
 
+      var disabled = !this.hasNickname();
+      var onChange = function onChange(e) {
+        return _this2.updateMessage(e);
+      };
+      var onSubmit = function onSubmit(e) {
+        return _this2.postMessage(e);
+      };
       return _react2['default'].createElement(
         'div',
         { className: 'MessageInput' },
-        this.hasNickname() ? _react2['default'].createElement(
+        _react2['default'].createElement(
           'form',
-          { onSubmit: function (e) {
-              return _this.postMessage(e);
-            } },
-          _react2['default'].createElement('input', { ref: 'messageInput', type: 'text', onChange: function (e) {
-              return _this.updateMessage(e);
-            }, value: message })
-        ) : 'You must have a nickname to post messages.'
+          { onSubmit: onSubmit },
+          _react2['default'].createElement(
+            'div',
+            { className: 'ui fluid left icon input' },
+            _react2['default'].createElement('input', { ref: 'messageInput', type: 'text', onChange: onChange, value: message, disabled: disabled,
+              placeholder: 'Type message...' }),
+            _react2['default'].createElement('i', { className: 'comment icon' })
+          )
+        )
       );
     }
   }], [{

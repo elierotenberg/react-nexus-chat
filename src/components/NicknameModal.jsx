@@ -1,6 +1,27 @@
 import React from 'react';
 import Nexus from 'react-nexus';
+import Identicon from 'react-identicon';
+import sha256 from 'sha256';
+import { styles } from 'react-statics-styles';
 
+@styles({
+  '.NicknameModal': {
+    position: 'fixed',
+    top: '0',
+    left: '0',
+    right: '0',
+    bottom: '0',
+    backgroundColor: 'rgba(120, 120, 120, 0.8)',
+    cursor: 'not-allowed',
+  },
+
+  '.NicknameModal > div': {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  },
+})
 @Nexus.inject(() => ({}))
 class NicknameModal extends React.Component {
   static displayName = 'NicknameModal';
@@ -13,11 +34,18 @@ class NicknameModal extends React.Component {
     }).isRequired,
   };
 
+  componentDidMount() {
+    this.refs.nicknameInput.getDOMNode().focus();
+  }
+
   updateNickname(e) {
     if(this.state.disabled) {
       return;
     }
     const { value } = e.target;
+    if(value.length > 14) {
+      return;
+    }
     this.setState({ nickname: value });
   }
 
@@ -45,13 +73,23 @@ class NicknameModal extends React.Component {
 
   render() {
     const { disabled, nickname } = this.state;
+    const { clientID } = this.props;
+    const onChange = (e) => this.updateNickname(e);
     return <div className='NicknameModal'>
-      <form onSubmit={(e) => this.postNickname(e)}>
-        <fieldset disabled={disabled}>
-          <input type='text' value={nickname} onChange={(e) => this.updateNickname(e)}/>
-          <input type='submit' value='set nickname' />
-        </fieldset>
-      </form>
+      <div>
+        <form onSubmit={(e) => this.postNickname(e)} className='ui fluid form segment'>
+          <h4 className='header'>
+            Welcome to React Nexus Chat!
+          </h4>
+          <p>Your avatar is <Identicon id={sha256(clientID)} type='retro' className='ui mini avatar image' /></p>
+          <p>Please enter a nickname to be able to post messages.</p>
+            <div className='ui action input'>
+              <input type='text' ref='nicknameInput' value={nickname} onChange={onChange}
+                placeholder='Pick a nickname' disabled={disabled} />
+              <button className='ui button' disabled={disabled} >Go!</button>
+            </div>
+        </form>
+      </div>
     </div>;
   }
 }

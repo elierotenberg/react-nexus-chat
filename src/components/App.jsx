@@ -46,8 +46,8 @@ class App extends React.Component {
     const { messages, status, users } = this.props;
     const clientID = this.props.session.get('clientID');
     return <div className='App'>
-      { nickname ? <PingTicker clientID={clientID} /> : <NicknameModal clientID={clientID} /> }
       <Room clientID={clientID} messages={messages} status={status} users={users} />
+      { nickname ? <PingTicker clientID={clientID} /> : <NicknameModal clientID={clientID} /> }
     </div>;
   }
 }

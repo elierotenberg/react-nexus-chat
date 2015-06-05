@@ -115,8 +115,8 @@ var App = (function (_React$Component) {
       return _react2['default'].createElement(
         'div',
         { className: 'App' },
-        nickname ? _react2['default'].createElement(_PingTicker2['default'], { clientID: clientID }) : _react2['default'].createElement(_NicknameModal2['default'], { clientID: clientID }),
-        _react2['default'].createElement(_Room2['default'], { clientID: clientID, messages: messages, status: status, users: users })
+        _react2['default'].createElement(_Room2['default'], { clientID: clientID, messages: messages, status: status, users: users }),
+        nickname ? _react2['default'].createElement(_PingTicker2['default'], { clientID: clientID }) : _react2['default'].createElement(_NicknameModal2['default'], { clientID: clientID })
       );
     }
   }], [{

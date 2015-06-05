@@ -26,6 +26,8 @@ var _pureRenderDecorator = require('pure-render-decorator');
 
 var _pureRenderDecorator2 = _interopRequireDefault(_pureRenderDecorator);
 
+var _reactStaticsStyles = require('react-statics-styles');
+
 var _MessageInput = require('./MessageInput');
 
 var _MessageInput2 = _interopRequireDefault(_MessageInput);
@@ -74,31 +76,57 @@ var Room = (function (_React$Component) {
         { className: 'Room' },
         _react2['default'].createElement(
           'div',
-          { className: 'Room-header' },
-          topic
-        ),
-        _react2['default'].createElement(
-          'div',
-          { className: 'Room-body' },
+          { className: 'ui page grid' },
           _react2['default'].createElement(
             'div',
-            { className: 'Room-body-upper' },
-            _react2['default'].createElement(_Messages2['default'], this.props),
-            _react2['default'].createElement(_Users2['default'], this.props)
-          ),
-          _react2['default'].createElement(
-            'div',
-            { className: 'Room-body-lower' },
-            _react2['default'].createElement(_MessageInput2['default'], this.props)
-          )
-        ),
-        _react2['default'].createElement(
-          'div',
-          { className: 'Room-footer' },
-          _react2['default'].createElement(
-            'a',
-            { target: '_blank', href: 'https://github.com/elierotenberg/react-nexus-chat' },
-            'github'
+            { className: 'sixteen column wide' },
+            _react2['default'].createElement(
+              'div',
+              { className: 'ui top attached header' },
+              topic
+            ),
+            _react2['default'].createElement(
+              'div',
+              { className: 'ui attached segment' },
+              _react2['default'].createElement(
+                'div',
+                { className: 'ui grid' },
+                _react2['default'].createElement(
+                  'div',
+                  { className: 'eleven wide column' },
+                  _react2['default'].createElement(_Messages2['default'], this.props)
+                ),
+                _react2['default'].createElement(
+                  'div',
+                  { className: 'five wide column' },
+                  _react2['default'].createElement(_Users2['default'], this.props)
+                )
+              )
+            ),
+            _react2['default'].createElement(
+              'div',
+              { className: 'ui attached segment' },
+              _react2['default'].createElement(_MessageInput2['default'], this.props)
+            ),
+            _react2['default'].createElement(
+              'div',
+              { className: 'ui bottom attached segment' },
+              'React Nexus Demo Chat made with ',
+              _react2['default'].createElement('i', { className: 'heart icon' }),
+              ' by ',
+              _react2['default'].createElement(
+                'a',
+                { target: '_blank', href: 'https://twitter.com/elierotenberg' },
+                '@elierotenberg'
+              ),
+              '. Check out the code on ',
+              _react2['default'].createElement(
+                'a',
+                { target: '_blank', href: 'https://github.com/elierotenberg/react-nexus-chat' },
+                _react2['default'].createElement('i', { className: 'github icon' })
+              ),
+              '!'
+            )
           )
         )
       );
@@ -118,6 +146,9 @@ var Room = (function (_React$Component) {
   }]);
 
   Room = (0, _pureRenderDecorator2['default'])(Room) || Room;
+  Room = (0, _reactStaticsStyles.styles)({
+    '.Room': {
+      paddingTop: '1em' } })(Room) || Room;
   return Room;
 })(_react2['default'].Component);
 
