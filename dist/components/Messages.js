@@ -131,7 +131,8 @@ var Messages = (function (_React$Component) {
       clientID: _react2['default'].PropTypes.string.isRequired,
       messages: _reactNexus2['default'].PropTypes.Immutable.Map,
       status: _reactNexus2['default'].PropTypes.Immutable.Map,
-      users: _reactNexus2['default'].PropTypes.Immutable.Map },
+      users: _reactNexus2['default'].PropTypes.Immutable.Map
+    },
     enumerable: true
   }]);
 
@@ -139,10 +140,13 @@ var Messages = (function (_React$Component) {
   Messages = (0, _reactStaticsStyles.styles)({
     '.Messages': {
       height: '600px',
-      overflowY: 'scroll' },
+      overflowY: 'scroll'
+    },
 
     '.Messages-content': {
-      maxWidth: '90%' } })(Messages) || Messages;
+      maxWidth: '90%'
+    }
+  })(Messages) || Messages;
   return Messages;
 })(_react2['default'].Component);
 

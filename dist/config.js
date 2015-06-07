@@ -28,31 +28,37 @@ if (__DEV__) {
   Error.stackTraceLimit = Infinity;
 }
 exports['default'] = {
-  MODULE_NAME: 'react-nexus-chat',
-
   analytics: {
-    UA: 'UA-XXXXX-X' },
+    UA: 'UA-XXXXX-X'
+  },
 
   render: {
     port: {
       'public': 80,
-      'private': 80 },
+      'private': 80
+    },
     host: 'localhost',
-    protocol: 'http' },
+    protocol: 'http'
+  },
 
   flux: {
     port: {
       'public': 8080,
-      'private': 8080 },
+      'private': 8080
+    },
     host: 'localhost',
-    protocol: 'http' },
+    protocol: 'http'
+  },
 
   intl: {
     en: _localesEn2['default'],
     'en-US': _localesEn2['default'],
     fr: _localesFr2['default'],
-    'fr-FR': _localesFr2['default'] },
+    'fr-FR': _localesFr2['default']
+  },
 
   INT_MAX: 9007199254740992,
-  DEFAULT_CLIENT_ID: 'DefaultClientId' };
+  DEFAULT_CLIENT_ID: 'DefaultClientId',
+  APP_ROOT_ID: 'ReactNexusChatAppRoot'
+};
 module.exports = exports['default'];

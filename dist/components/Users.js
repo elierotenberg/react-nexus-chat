@@ -97,7 +97,8 @@ var Users = (function (_React$Component) {
       clientID: _react2['default'].PropTypes.string.isRequired,
       messages: _reactNexus2['default'].PropTypes.Immutable.Map,
       status: _reactNexus2['default'].PropTypes.Immutable.Map,
-      users: _reactNexus2['default'].PropTypes.Immutable.Map },
+      users: _reactNexus2['default'].PropTypes.Immutable.Map
+    },
     enumerable: true
   }]);
 
@@ -105,7 +106,9 @@ var Users = (function (_React$Component) {
   Users = (0, _reactStaticsStyles.styles)({
     '.Users': {
       height: '600px',
-      overflowY: 'scroll' } })(Users) || Users;
+      overflowY: 'scroll'
+    }
+  })(Users) || Users;
   return Users;
 })(_react2['default'].Component);
 

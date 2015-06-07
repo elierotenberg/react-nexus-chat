@@ -21,8 +21,9 @@ function spawn(child) {
     console.log('Starting', child);
     (0, _child_process.fork)((0, _path.join)(__dirname, child), {
       env: {
-        MILLENIUM_MODE: process.env.MILLENIUM_MODE || 'local',
-        NODE_ENV: process.env.NODE_ENV || 'development' } }).on('exit', function (code) {
+        NODE_ENV: process.env.NODE_ENV || 'development'
+      }
+    }).on('exit', function (code) {
       console.warn(child, 'exited with code', code);
       start();
     });

@@ -6,7 +6,6 @@ function spawn(child) {
     console.log('Starting', child);
     fork(join(__dirname, child), {
       env: {
-        MILLENIUM_MODE: process.env.MILLENIUM_MODE || 'local',
         NODE_ENV: process.env.NODE_ENV || 'development',
       },
     })

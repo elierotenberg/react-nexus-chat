@@ -25,6 +25,11 @@ class Room extends React.Component {
   render() {
     const { status } = this.props;
     const topic = status.get('topic');
+    const heart = <i className='heart icon' />;
+    const credits = <a target='_blank' href='https://twitter.com/elierotenberg'>@elierotenberg</a>;
+    const github = <a target='_blank' href='https://github.com/elierotenberg/react-nexus-chat'>
+      <i className='github icon' />
+    </a>;
     return <div className='Room'>
       <div className='ui page grid'>
         <div className='sixteen column wide'>
@@ -45,7 +50,7 @@ class Room extends React.Component {
             <MessageInput {...this.props} />
           </div>
           <div className='ui bottom attached segment'>
-            React Nexus Demo Chat made with <i className='heart icon' /> by <a target='_blank' href='https://twitter.com/elierotenberg'>@elierotenberg</a>. Check out the code on <a target='_blank' href='https://github.com/elierotenberg/react-nexus-chat'><i className='github icon' /></a>!
+            React Nexus Demo Chat made with {heart} by {credits}. Check out the code on {github}!
           </div>
         </div>
       </div>

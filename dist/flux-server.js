@@ -79,15 +79,18 @@ var ChatServer = (function (_SocketIOServer) {
     this.stores = {
       '/status': new _nexusFlux.Remutable({
         date: Date.now(),
-        topic: 'Welcome!' }),
+        topic: 'Welcome!'
+      }),
       '/messages': new _nexusFlux.Remutable({}),
-      '/users': new _nexusFlux.Remutable({}) };
+      '/users': new _nexusFlux.Remutable({})
+    };
 
     this.usersTimers = {};
 
     this.postMessage({
       nickname: 'System',
-      text: 'The server has started!' });
+      text: 'The server has started!'
+    });
 
     this.on('action', function (_ref) {
       var path = _ref.path;
@@ -155,12 +158,14 @@ var ChatServer = (function (_SocketIOServer) {
         if (this.usersTimers[h] === void 0) {
           this.postMessage({
             nickname: 'System',
-            text: '' + nickname + ' has joined.' });
+            text: '' + nickname + ' has joined.'
+          });
         } else {
           var oldNickname = this.stores['/users'].get(h).nickname;
           this.postMessage({
             nickname: 'System',
-            text: '' + oldNickname + ' is now ' + nickname + '.' });
+            text: '' + oldNickname + ' is now ' + nickname + '.'
+          });
         }
         this.usersTimers[h] = Date.now();
         this.dispatchUpdate('/users', this.stores['/users'].set(h, { h: h, nickname: nickname }).commit());
@@ -213,7 +218,8 @@ var ChatServer = (function (_SocketIOServer) {
 
           _this3.postMessage({
             nickname: 'System',
-            text: '' + nickname + ' has left.' });
+            text: '' + nickname + ' has left.'
+          });
           users['delete'](h);
           delete _this3.usersTimers[h];
         }

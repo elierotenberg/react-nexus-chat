@@ -3,7 +3,7 @@ import Nexus from 'react-nexus';
 import sha256 from 'sha256';
 import requestAnimationFrame from 'raf';
 
-@Nexus.inject(() => ({}))
+@Nexus.component()
 class MessageInput extends React.Component {
   static displayName = 'MessageInput';
 

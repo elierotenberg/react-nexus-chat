@@ -71,6 +71,17 @@ var Room = (function (_React$Component) {
       var status = this.props.status;
 
       var topic = status.get('topic');
+      var heart = _react2['default'].createElement('i', { className: 'heart icon' });
+      var credits = _react2['default'].createElement(
+        'a',
+        { target: '_blank', href: 'https://twitter.com/elierotenberg' },
+        '@elierotenberg'
+      );
+      var github = _react2['default'].createElement(
+        'a',
+        { target: '_blank', href: 'https://github.com/elierotenberg/react-nexus-chat' },
+        _react2['default'].createElement('i', { className: 'github icon' })
+      );
       return _react2['default'].createElement(
         'div',
         { className: 'Room' },
@@ -112,19 +123,11 @@ var Room = (function (_React$Component) {
               'div',
               { className: 'ui bottom attached segment' },
               'React Nexus Demo Chat made with ',
-              _react2['default'].createElement('i', { className: 'heart icon' }),
+              heart,
               ' by ',
-              _react2['default'].createElement(
-                'a',
-                { target: '_blank', href: 'https://twitter.com/elierotenberg' },
-                '@elierotenberg'
-              ),
+              credits,
               '. Check out the code on ',
-              _react2['default'].createElement(
-                'a',
-                { target: '_blank', href: 'https://github.com/elierotenberg/react-nexus-chat' },
-                _react2['default'].createElement('i', { className: 'github icon' })
-              ),
+              github,
               '!'
             )
           )
@@ -141,14 +144,17 @@ var Room = (function (_React$Component) {
       clientID: _react2['default'].PropTypes.string.isRequired,
       messages: _reactNexus2['default'].PropTypes.Immutable.Map,
       status: _reactNexus2['default'].PropTypes.Immutable.Map,
-      users: _reactNexus2['default'].PropTypes.Immutable.Map },
+      users: _reactNexus2['default'].PropTypes.Immutable.Map
+    },
     enumerable: true
   }]);
 
   Room = (0, _pureRenderDecorator2['default'])(Room) || Room;
   Room = (0, _reactStaticsStyles.styles)({
     '.Room': {
-      paddingTop: '1em' } })(Room) || Room;
+      paddingTop: '1em'
+    }
+  })(Room) || Room;
   return Room;
 })(_react2['default'].Component);
 

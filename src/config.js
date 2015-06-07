@@ -2,8 +2,6 @@ import en from './locales/en';
 import fr from './locales/fr';
 
 export default {
-  MODULE_NAME: 'react-nexus-chat',
-
   analytics: {
     UA: 'UA-XXXXX-X',
   },
@@ -35,4 +33,5 @@ export default {
 
   INT_MAX: 9007199254740992,
   DEFAULT_CLIENT_ID: 'DefaultClientId',
+  APP_ROOT_ID: 'ReactNexusChatAppRoot',
 };

@@ -22,7 +22,7 @@ import { styles } from 'react-statics-styles';
     transform: 'translate(-50%, -50%)',
   },
 })
-@Nexus.inject(() => ({}))
+@Nexus.component()
 class NicknameModal extends React.Component {
   static displayName = 'NicknameModal';
   static propTypes = {

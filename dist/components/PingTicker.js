@@ -86,13 +86,14 @@ var PingTicker = (function (_React$Component) {
       clientID: _react2['default'].PropTypes.string,
       nexus: _react2['default'].PropTypes.shape({
         remote: _react2['default'].PropTypes.shape({
-          dispatchAction: _react2['default'].PropTypes.func.isRequired }).isRequired }).isRequired },
+          dispatchAction: _react2['default'].PropTypes.func.isRequired
+        }).isRequired
+      }).isRequired
+    },
     enumerable: true
   }]);
 
-  PingTicker = _reactNexus2['default'].inject(function () {
-    return {};
-  })(PingTicker) || PingTicker;
+  PingTicker = _reactNexus2['default'].component()(PingTicker) || PingTicker;
   return PingTicker;
 })(_react2['default'].Component);
 

@@ -53,7 +53,8 @@ var NicknameModal = (function (_React$Component) {
     _get(Object.getPrototypeOf(_NicknameModal.prototype), 'constructor', this).call(this, props);
     this.state = {
       nickname: '',
-      disabled: false };
+      disabled: false
+    };
   }
 
   _inherits(NicknameModal, _React$Component);
@@ -159,13 +160,14 @@ var NicknameModal = (function (_React$Component) {
       clientID: _react2['default'].PropTypes.string,
       nexus: _react2['default'].PropTypes.shape({
         remote: _react2['default'].PropTypes.shape({
-          dispatchAction: _react2['default'].PropTypes.func.isRequired }).isRequired }).isRequired },
+          dispatchAction: _react2['default'].PropTypes.func.isRequired
+        }).isRequired
+      }).isRequired
+    },
     enumerable: true
   }]);
 
-  NicknameModal = _reactNexus2['default'].inject(function () {
-    return {};
-  })(NicknameModal) || NicknameModal;
+  NicknameModal = _reactNexus2['default'].component()(NicknameModal) || NicknameModal;
   NicknameModal = (0, _reactStaticsStyles.styles)({
     '.NicknameModal': {
       position: 'fixed',
@@ -174,13 +176,16 @@ var NicknameModal = (function (_React$Component) {
       right: '0',
       bottom: '0',
       backgroundColor: 'rgba(120, 120, 120, 0.8)',
-      cursor: 'not-allowed' },
+      cursor: 'not-allowed'
+    },
 
     '.NicknameModal > div': {
       position: 'fixed',
       top: '50%',
       left: '50%',
-      transform: 'translate(-50%, -50%)' } })(NicknameModal) || NicknameModal;
+      transform: 'translate(-50%, -50%)'
+    }
+  })(NicknameModal) || NicknameModal;
   return NicknameModal;
 })(_react2['default'].Component);
 

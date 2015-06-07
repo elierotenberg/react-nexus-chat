@@ -3,7 +3,7 @@ import Nexus from 'react-nexus';
 
 const PING_TICK_INTERVAL = 3000;
 
-@Nexus.inject(() => ({}))
+@Nexus.component()
 class PingTicker extends React.Component {
   static displayName = 'PingTicker';
   static propTypes = {

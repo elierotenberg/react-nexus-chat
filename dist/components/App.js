@@ -8,8 +8,6 @@ var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default
 
 var _Object$defineProperty = require('babel-runtime/core-js/object/define-property')['default'];
 
-var _Object$assign = require('babel-runtime/core-js/object/assign')['default'];
-
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
 
 _Object$defineProperty(exports, '__esModule', {
@@ -36,9 +34,11 @@ var _nexusFluxSocketIoClient = require('nexus-flux-socket.io/client');
 
 var _nexusFluxSocketIoClient2 = _interopRequireDefault(_nexusFluxSocketIoClient);
 
-var _url = require('url');
-
 var _nexusFlux = require('nexus-flux');
+
+var _pureRenderDecorator = require('pure-render-decorator');
+
+var _pureRenderDecorator2 = _interopRequireDefault(_pureRenderDecorator);
 
 var _PingTicker = require('./PingTicker');
 
@@ -51,10 +51,6 @@ var _NicknameModal2 = _interopRequireDefault(_NicknameModal);
 var _Room = require('./Room');
 
 var _Room2 = _interopRequireDefault(_Room);
-
-var _router = require('../router');
-
-var _router2 = _interopRequireDefault(_router);
 
 var _config = require('../config');
 
@@ -129,7 +125,8 @@ var App = (function (_React$Component) {
       messages: _reactNexus2['default'].PropTypes.Immutable.Map,
       session: _reactNexus2['default'].PropTypes.Immutable.Map,
       status: _reactNexus2['default'].PropTypes.Immutable.Map,
-      users: _reactNexus2['default'].PropTypes.Immutable.Map },
+      users: _reactNexus2['default'].PropTypes.Immutable.Map
+    },
     enumerable: true
   }, {
     key: 'styles',
@@ -137,76 +134,49 @@ var App = (function (_React$Component) {
     enumerable: true
   }]);
 
-  App = _reactNexus2['default'].inject(function () {
+  App = (0, _pureRenderDecorator2['default'])(App) || App;
+  App = _reactNexus2['default'].component(function () {
     return {
-      messages: ['remote', '/messages', {}],
-      session: ['local', '/session', {}],
-      status: ['remote', '/status', {}],
-      users: ['remote', '/users', {}] };
+      messages: ['remote://messages', {}],
+      session: ['local://session', {}],
+      status: ['remote://status', {}],
+      users: ['remote://users', {}]
+    };
   })(App) || App;
-  return App;
-})(_react2['default'].Component);
-
-_Object$assign(App, {
-  getRoutes: function getRoutes(_ref) {
-    var window = _ref.window;
+  App = _reactNexus2['default'].root(function (_ref) {
     var req = _ref.req;
-    var url = _ref.url;
+    var window = _ref.window;
+    var clientID = _ref.clientID;
 
-    var href = url ? url : req ? req.url : window ? window.location.href : '';
+    var lifespan = new _nexusFlux.Lifespan();
 
-    var _parse = (0, _url.parse)(href);
-
-    var path = _parse.path;
-    var hash = _parse.hash;
-
-    return _router2['default'].route('' + path + '' + (hash ? hash : ''));
-  },
-
-  updateMetaDOMNodes: function updateMetaDOMNodes(_ref2) {
-    var window = _ref2.window;
-
-    if (__DEV__) {
-      __BROWSER__.should.be['true'];
-    }
-    var _App$getRoutes$0 = App.getRoutes({ window: window })[0];
-    var title = _App$getRoutes$0.title;
-    var description = _App$getRoutes$0.description;
-
-    var titleDOMNode = window.document.querySelector('title');
-    if (titleDOMNode !== null) {
-      titleDOMNode.textContent = title;
-    }
-    var descriptionDOMNode = window.document.querySelector('meta[name=description]');
-    if (descriptionDOMNode !== null) {
-      descriptionDOMNode.setAttribute('content', description);
-    }
-  },
-
-  createLocalFluxClient: function createLocalFluxClient(_ref3, clientID, lifespan) {
-    var req = _ref3.req;
-    var window = _ref3.window;
-
-    var stores = {
+    var localStores = {
       '/window': new _nexusFlux.Remutable({
-        routes: App.getRoutes({ req: req, window: window }),
         locale: __NODE__ ? req.acceptsLanguages(['en', 'fr']) || 'en' : window.navigator.userLanguage || window.navigator.language || 'en',
         scrollX: __NODE__ ? 0 : window.scrollX,
-        scrollY: __NODE__ ? 0 : window.scrollY }),
+        scrollY: __NODE__ ? 0 : window.scrollY
+      }),
       '/session': new _nexusFlux.Remutable({
-        clientID: clientID }) };
+        clientID: clientID
+      })
+    };
 
-    var server = new _nexusFluxAdaptersLocal2['default'].Server(stores);
-    var client = new _nexusFluxAdaptersLocal2['default'].Client(server);
-
+    var localServer = new _nexusFluxAdaptersLocal2['default'].Server(localStores);
+    var localClient = new _nexusFluxAdaptersLocal2['default'].Client(localServer);
     lifespan.onRelease(function () {
-      client.lifespan.release();
-      server.lifespan.release();
+      return localClient.lifespan.release();
+    });
+    lifespan.onRelease(function () {
+      return localServer.lifespan.release();
     });
 
-    server.on('action', function (_ref4) {
-      var path = _ref4.path;
-      var params = _ref4.params;
+    _.each(localStores, function (value, key) {
+      return localServer.dispatchUpdate(key, value.commit());
+    });
+
+    localServer.on('action', function (_ref2) {
+      var path = _ref2.path;
+      var params = _ref2.params;
 
       if (path === '/window/scroll') {
         var x = params.x;
@@ -221,45 +191,25 @@ _Object$assign(App, {
 
     if (__BROWSER__) {
       window.addEventListener('scroll', function () {
-        server.dispatchUpdate('/window', stores['/window'].set('scrollY', window.scrollX).set('scrollY', window.scrollY).commit());
+        localServer.dispatchUpdate('/window', localStores['/window'].set('scrollY', window.scrollX).set('scrollY', window.scrollY).commit());
       });
-
-      window.addEventListener('popstate', function () {
-        server.dispatchUpdate('/window', stores['/window'].set('routes', App.getRoutes({ window: window })).commit());
-
-        App.updateMetaDOMNodes({ window: window });
-      });
-
-      server.dispatchUpdate('/window', stores['/window'].set('routes', App.getRoutes({ window: window })).set('locale', window.navigator.userLanguage || window.navigator.language || 'en').set('scrollX', window.scrollX).set('scrollY', window.scrollY).commit()).dispatchUpdate('/session', stores['/session'].set('clientID', clientID).commit());
     }
 
-    return client;
-  },
-
-  createRemoteFluxClient: function createRemoteFluxClient(_ref5, clientID, lifespan) {
-    var req = _ref5.req;
-    var window = _ref5.window;
-
-    var client = new _nexusFluxSocketIoClient2['default']('' + protocol + '://' + host + ':' + port['public']);
+    var remoteClient = new _nexusFluxSocketIoClient2['default']('' + protocol + '://' + host + ':' + port['public']);
     lifespan.onRelease(function () {
-      return client.lifespan.release();
+      return remoteClient.lifespan.release();
     });
 
-    if (__BROWSER__) {
-      client.forceResync();
-    }
+    var nexus = {
+      local: localClient,
+      remote: remoteClient
+    };
 
-    return client;
-  },
-
-  createNexus: function createNexus(_ref6, clientID, lifespan) {
-    var req = _ref6.req;
-    var window = _ref6.window;
-
-    return {
-      local: App.createLocalFluxClient({ req: req, window: window }, clientID, lifespan),
-      remote: App.createRemoteFluxClient({ req: req, window: window }, clientID, lifespan) };
-  } });
+    return { nexus: nexus, lifespan: lifespan };
+  })(App) || App;
+  return App;
+})(_react2['default'].Component);
 
 exports['default'] = App;
 module.exports = exports['default'];
+// local flux

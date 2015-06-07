@@ -159,15 +159,16 @@ var MessageInput = (function (_React$Component) {
       messages: _reactNexus2['default'].PropTypes.Immutable.Map,
       nexus: _react2['default'].PropTypes.shape({
         remote: _react2['default'].PropTypes.shape({
-          dispatchAction: _react2['default'].PropTypes.func.isRequired }).isRequired }).isRequired,
+          dispatchAction: _react2['default'].PropTypes.func.isRequired
+        }).isRequired
+      }).isRequired,
       status: _reactNexus2['default'].PropTypes.Immutable.Map,
-      users: _reactNexus2['default'].PropTypes.Immutable.Map },
+      users: _reactNexus2['default'].PropTypes.Immutable.Map
+    },
     enumerable: true
   }]);
 
-  MessageInput = _reactNexus2['default'].inject(function () {
-    return {};
-  })(MessageInput) || MessageInput;
+  MessageInput = _reactNexus2['default'].component()(MessageInput) || MessageInput;
   return MessageInput;
 })(_react2['default'].Component);
 
