@@ -1,6 +1,6 @@
 {
-  "name": "es6-starterkit",
-  "version": "0.1.0",
+  "name": "react-nexus-chat",
+  "version": "3.0.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/elierotenberg/es6-starterkit.git"
+    "url": "https://github.com/elierotenberg/react-nexus-chat.git"
   },
   "author": "Elie Rotenberg <elie@rotenberg.io>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/elierotenberg/es6-starterkit/issues"
+    "url": "https://github.com/elierotenberg/react-nexus-chat/issues"
   },
-  "homepage": "https://github.com/elierotenberg/es6-starterkit",
+  "homepage": "https://github.com/elierotenberg/react-nexus-chat",
   "dependencies": {
     "autoprefixer-core": "^5.2.0",
     "babel": "^5.4.7",
