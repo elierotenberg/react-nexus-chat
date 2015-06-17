@@ -8,20 +8,20 @@ export default {
 
   render: {
     port: {
-      public: 80,
-      private: 80,
+      public: 443,
+      private: 19924,
     },
-    host: 'localhost',
-    protocol: 'http',
+    host: 'react-nexus-chat.rotenberg.io',
+    protocol: 'https',
   },
 
   flux: {
     port: {
-      public: 8080,
-      private: 8080,
+      public: 443,
+      private: 19925,
     },
-    host: 'localhost',
-    protocol: 'http',
+    host: 'react-nexus-chat-flux.rotenberg.io',
+    protocol: 'https',
   },
 
   intl: {
