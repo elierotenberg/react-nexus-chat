@@ -5,6 +5,8 @@ import React from 'react';
 import jsesc from 'jsesc';
 import cors from 'cors';
 import { resolve } from 'url';
+import _ from 'lodash';
+const __DEV__ = process.env.NODE_ENV === 'development';
 
 import { analytics, APP_ROOT_ID, DEFAULT_CLIENT_ID, render } from './config';
 const { protocol, port, host } = render;
@@ -45,8 +47,8 @@ const stylesheets = {
 };
 
 express()
-.use(favicon(`${__dirname}/public/favicon.ico`))
-.use(express.static(`${__dirname}/public`))
+.use(favicon(`${__dirname}/../public/favicon.ico`))
+.use(express.static(`${__dirname}/../public`))
 .use(cors())
 .get('/', (req, res) => {
   const clientID = DEFAULT_CLIENT_ID;

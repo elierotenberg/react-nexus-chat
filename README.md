@@ -7,20 +7,18 @@ Full demo chat app built with `react-nexus`.
 
 - `npm install`
 
-- You might need to rebuild the project using `gulp`.
-
-- `node dist/index`
+- `npm start`
 
 - Head your browser to `localhost`
 
 - You're done.
 
-If you want to tweak things up, the source code is meant to be very straightfoward.
+If you want to tweak things up, the source code is meant to be very straightfoward - checkout `src/config.jsx` especially for hosts/ports.
 
-If you want to run the server in `production` mode (with dead code elimination, with much less runtime checks, and minification), run:
+If you want to run the server in `development` mode (without minification and much more runtime checks), run:
 
-- `NODE_ENV=production gulp`
+- `NODE_ENV=developement gulp`
 
-- `NODE_ENV=production node dist/index`
+- `NODE_ENV=development node src/server.jsx`
 
 Have fun!

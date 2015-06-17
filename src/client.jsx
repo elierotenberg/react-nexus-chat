@@ -1,7 +1,8 @@
-import Nexus from 'react-nexus';
+import { React } from 'react-nexus';
 import uuid from 'node-uuid';
-const { React } = Nexus;
 import App from './components/App';
+const __DEV__ = process.env.NODE_ENV === 'development';
+const __BROWSER__ = (typeof window === 'object');
 
 if(__DEV__) {
   __BROWSER__.should.be.true;

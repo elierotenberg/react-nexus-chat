@@ -1,10 +1,13 @@
 import sha256 from 'sha256';
 import LocalFlux from 'nexus-flux/adapters/Local';
-import Nexus from 'react-nexus';
+import Nexus, { root, component } from 'react-nexus';
 import React from 'react';
 import RemoteFluxClient from 'nexus-flux-socket.io/client';
 import { Lifespan, Remutable } from 'nexus-flux';
 import pure from 'pure-render-decorator';
+import _ from 'lodash';
+const __BROWSER__ = (typeof window === 'object');
+const __NODE__ = !__BROWSER__;
 
 import PingTicker from './PingTicker';
 import NicknameModal from './NicknameModal';
@@ -12,7 +15,7 @@ import Room from './Room';
 import { flux } from '../config';
 const { protocol, host, port } = flux;
 
-@Nexus.root(({ req, window, clientID }) => {
+@root(({ req, window, clientID }) => {
   const lifespan = new Lifespan();
   // local flux
   const localStores = {
@@ -32,8 +35,8 @@ const { protocol, host, port } = flux;
   lifespan.onRelease(() => localClient.lifespan.release());
   lifespan.onRelease(() => localServer.lifespan.release());
 
-  _.each(localStores,
-    (value, key) => localServer.dispatchUpdate(key, value.commit())
+  _.each(localStores, (value, key) =>
+    localServer.dispatchUpdate(key, value.commit())
   );
 
   localServer.on('action', ({ path, params }) => {
@@ -67,7 +70,7 @@ const { protocol, host, port } = flux;
 
   return { nexus, lifespan };
 })
-@Nexus.component(() => ({
+@component(() => ({
   messages: ['remote://messages', {}],
   session: ['local://session', {}],
   status: ['remote://status', {}],

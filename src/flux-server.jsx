@@ -3,6 +3,8 @@ import { Remutable } from 'nexus-flux';
 import { flux } from './config';
 import sha256 from 'sha256';
 import morgan from 'morgan';
+import _ from 'lodash';
+import Promise from 'bluebird';
 const { port } = flux;
 
 const CLOCK_TICK_INTERVAL = 500;
