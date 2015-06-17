@@ -79,14 +79,20 @@ class ChatServer extends SocketIOServer {
     }
     if(path === '/setNickname') {
       const { clientID, nickname } = params;
+      if(!_.isString(nickname) || nickname.length === 0) {
+        return;
+      }
       const h = sha256(clientID);
+      let joined;
       if(this.usersTimers[h] === void 0) {
+        joined = Date.now();
         this.postMessage({
           nickname: 'System',
           text: `${nickname} has joined.`,
         });
       }
       else {
+        joined = this.stores['/users'].get(h).joined;
         const oldNickname = this.stores['/users'].get(h).nickname;
         this.postMessage({
           nickname: 'System',
@@ -96,7 +102,7 @@ class ChatServer extends SocketIOServer {
       this.usersTimers[h] = Date.now();
       this.dispatchUpdate(
         '/users',
-        this.stores['/users'].set(h, { h, nickname }).commit()
+        this.stores['/users'].set(h, { h, nickname, joined }).commit()
       );
       return;
     }
