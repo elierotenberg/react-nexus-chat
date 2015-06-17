@@ -55,6 +55,9 @@ class NicknameModal extends React.Component {
       return;
     }
     const { nickname } = this.state;
+    if(nickname.length === 0) {
+      return;
+    }
     const { clientID } = this.props;
     if(!clientID) {
       return;

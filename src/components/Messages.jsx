@@ -5,6 +5,35 @@ import moment from 'moment';
 import Identicon from 'react-identicon';
 import { styles } from 'react-statics-styles';
 import requestAnimationFrame from 'raf';
+import Remarkable from 'remarkable';
+import hljs from 'highlight.js';
+
+const md = new Remarkable({
+  html: false,
+  xhtmlOut: true,
+  breaks: true,
+  linkify: false,
+  typographer: true,
+  highlight(str, lang) {
+    if(lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(lang, str).value;
+      }
+      catch(err) {
+        void err;
+      }
+    }
+
+    try {
+      return hljs.highlightAuto(str).value;
+    }
+    catch(err) {
+      void err;
+    }
+
+    return '';
+  },
+});
 
 function getTimeString(date) {
   return moment(date).format('HH:mm:ss');
@@ -49,7 +78,9 @@ class Messages extends React.Component {
           <Identicon id={h} type='retro' className='ui top aligned mini avatar image' />
           <div className='Messages-content content'>
             <div className='header'>{nickname} <span className='Messages-date'>{getTimeString(date)}</span></div>
-            {text}
+            <div dangerouslySetInnerHTML={{
+              __html: md.render(text),
+            }} />
           </div>
         </div>)
         .toArray()

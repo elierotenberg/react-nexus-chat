@@ -3,6 +3,7 @@ import Nexus from 'react-nexus';
 import pure from 'pure-render-decorator';
 import Identicon from 'react-identicon';
 import { styles } from 'react-statics-styles';
+import moment from 'moment';
 
 @styles({
   '.Users': {
@@ -27,12 +28,14 @@ class Users extends React.Component {
       <div className='ui list'>
         {users
           .sort((a, b) => a.nickname.localeCompare(b.nickname))
-          .map(({ h, nickname }) => <div key={h} className='item'>
-            <Identicon id={h} type='retro' className='ui avatar image' />
-            <div className='content'>
-              {nickname}
+          .map(({ h, nickname, joined }) =>
+            <div key={h} className='item' title={`Connected since ${moment(joined).format('dddd, MMMM Do, HH:mm:ss')}`}>
+              <Identicon id={h} type='retro' className='ui avatar image' />
+              <div className='content'>
+                {nickname}
+              </div>
             </div>
-          </div>)
+          )
           .toArray()
         }
       </div>
